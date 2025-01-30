@@ -1,0 +1,40 @@
+[
+    {
+        "dni": "1",
+        "nombre": "1",
+        "apellido_1": "1",
+        "apellido_2": "1",
+        "curso": "",
+        "fecha_matriculacion": "",
+        "domicilio": "",
+        "municipio": "",
+        "provincia": "",
+        "telefono1": "",
+        "telefono2": "",
+        "correo": "",
+        "num_clases": 0,
+        "profesor": "",
+        "examenes_teoricos": [],
+        "examenes_circulacion": [],
+        "total_anticipos": 0.0
+    },
+    {
+        "dni": "2",
+        "nombre": "1",
+        "apellido_1": "2",
+        "apellido_2": "2",
+        "curso": "",
+        "fecha_matriculacion": "",
+        "domicilio": "",
+        "municipio": "",
+        "provincia": "",
+        "telefono1": "",
+        "telefono2": "",
+        "correo": "",
+        "num_clases": 0,
+        "profesor": "",
+        "examenes_teoricos": [],
+        "examenes_circulacion": [],
+        "total_anticipos": 0.0
+    }
+]

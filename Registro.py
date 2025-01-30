@@ -1,9 +1,13 @@
+from feedback2.Alumno import Alumno
+from feedback2.Permiso import Permiso
+from feedback2.Profesor import Profesor
+
 class Registro:
     def __init__(self, alumno, fecha_registro, permiso, profesor):
-        self._alumno = alumno
+        self._alumno = alumno if isinstance(alumno, Alumno) else Alumno(**alumno)
         self._fecha_registro = fecha_registro
-        self._permiso = permiso
-        self._profesor = profesor
+        self._permiso = permiso if isinstance(permiso, Permiso) else Permiso(**permiso)
+        self._profesor = profesor if isinstance(profesor, Profesor) else Profesor(**profesor)
 
     @property
     def fecha_registro(self):
@@ -19,7 +23,7 @@ class Registro:
 
     @permiso.setter
     def permiso(self, value):
-        self._permiso = value
+        self._permiso = value if isinstance(value, Permiso) else Permiso(**value)
 
     @property
     def alumno(self):
@@ -27,7 +31,7 @@ class Registro:
 
     @alumno.setter
     def alumno(self, value):
-        self._alumno = value
+        self._alumno = value if isinstance(value, Alumno) else Alumno(**value)
 
     @property
     def profesor(self):
@@ -35,13 +39,17 @@ class Registro:
 
     @profesor.setter
     def profesor(self, value):
-        self._profesor = value
+        self._profesor = value if isinstance(value, Profesor) else Profesor(**value)
 
     def to_string(self):
-        return (f'Alumno: {self._alumno.to_string()}\n'
+        alumno_str = self._alumno.to_string() if isinstance(self._alumno, Alumno) else str(self._alumno)
+        permiso_str = self._permiso.to_string() if isinstance(self._permiso, Permiso) else str(self._permiso)
+        profesor_str = self._profesor.to_string() if isinstance(self._profesor, Profesor) else str(self._profesor)
+
+        return (f'Alumno: {alumno_str}\n'
                 f'Fecha de Registro: {self._fecha_registro}\n'
-                f'Permiso: {self._permiso.to_string()}\n'
-                f'Profesor: {self._profesor.to_string()}')
+                f'Permiso: {permiso_str}\n'
+                f'Profesor: {profesor_str}')
 
     def to_json(self):
         return {

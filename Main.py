@@ -385,11 +385,120 @@ def buscar_profesor(dni):
             return profesor
     return None
 
+def mostrar_submenu_profesores():
+    print("Gestión de Profesores")
+    print("1. Registrar Profesor")
+    print("2. Editar Profesor")
+    print("3. Consultar Profesor")
+    print("4. Listar todos los Profesores")
+    print("5. Volver al Menú Principal")
+
+def gestionar_profesores():
+    while True:
+        mostrar_submenu_profesores()
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            registrar_profesor()
+        elif opcion == "2":
+            editar_profesor()
+        elif opcion == "3":
+            consultar_profesor()
+        elif opcion == "4":
+            listar_profesores()
+        elif opcion == "5":
+            break
+        else:
+            print("Opción no válida, por favor intente de nuevo.")
+
+def registrar_profesor():
+    try:
+        dni = ""
+        valido = False
+        while not valido:
+            dni = input("Ingrese el DNI del profesor: ")
+            if valida_profesor(dni):
+                print(f"El profesor con DNI {dni} ya está registrado.")
+            else:
+                valido = True
+        nombre = input("Ingrese el nombre del profesor: ")
+        apellido_1 = input("Ingrese el primer apellido del profesor: ")
+        apellido_2 = input("Ingrese el segundo apellido del profesor: ")
+        nuevo_profesor = Profesor(dni, nombre, apellido_1, apellido_2)
+        profesores.append(nuevo_profesor)
+        guardar_datos_generico('profesores.json', profesores)
+        print(f"Profesor {nombre} con DNI {dni} registrado.")
+    except Exception as e:
+        print(f"Error al registrar profesor: {e}")
+
+def mostrar_submenu_editar_profesor():
+    print("Editar Profesor")
+    print("1. Editar Nombre")
+    print("2. Editar Primer Apellido")
+    print("3. Editar Segundo Apellido")
+    print("4. Añadir Permiso")
+    print("0. Volver al Menú Anterior")
+
+def editar_profesor():
+    dni = input("Ingrese el DNI del profesor a editar: ")
+    profesor = buscar_profesor(dni)
+    if profesor:
+        print(f"Profesor encontrado: {profesor.to_string()}")
+        while True:
+            mostrar_submenu_editar_profesor()
+            opcion = input("Seleccione el dato a editar: ")
+            if opcion == "1":
+                nuevo_nombre = input("Ingrese el nuevo nombre del profesor: ")
+                profesor.nombre = nuevo_nombre
+            elif opcion == "2":
+                nuevo_apellido1 = input("Ingrese el nuevo primer apellido del profesor: ")
+                profesor.apellido_1 = nuevo_apellido1
+            elif opcion == "3":
+                nuevo_apellido2 = input("Ingrese el nuevo segundo apellido del profesor: ")
+                profesor.apellido_2 = nuevo_apellido2
+            elif opcion == "4":
+                while True:
+                    tipo_permiso = input("Ingrese el tipo de permiso (o 0 para volver): ")
+                    if tipo_permiso == "0":
+                        break
+                    permiso = buscar_permiso(tipo_permiso)
+                    if permiso:
+                        profesor.agregar_permiso(permiso)
+                        print(f"Permiso {tipo_permiso} añadido al profesor.")
+                    else:
+                        print(f"No se encontró un permiso de tipo {tipo_permiso}.")
+            elif opcion == "0":
+                print("Volviendo al menú anterior...")
+                break
+            else:
+                print("Opción no válida, por favor intente de nuevo.")
+            guardar_datos_generico('profesores.json', profesores)
+            print("Profesor actualizado correctamente.")
+    else:
+        print(f"No se encontró un profesor con DNI {dni}.")
+
+def consultar_profesor():
+    dni = input("Ingrese el DNI del profesor a consultar: ")
+    profesor = buscar_profesor(dni)
+    if profesor:
+        print(f"Profesor encontrado: {profesor.to_string()}")
+    else:
+        print(f"No se encontró un profesor con DNI {dni}.")
+
+def listar_profesores():
+    for profesor in profesores:
+        print(profesor.to_string())
+
+def valida_profesor(dni):
+    for profesor in profesores:
+        if profesor.dni == dni:
+            return True
+    return False
+
 def mostrar_menu():
     print("Menú Principal")
     print("1. Gestionar Registros")
     print("2. Gestionar Alumnos")
-    print("3. Registrar Profesor")
+    print("3. Gestionar Profesores")
     print("4. Registrar Clase")
     print("5. Registrar Anticipo")
     print("6. Generar Factura")
@@ -404,7 +513,7 @@ def main():
         elif opcion == "2":
             gestionar_alumnos()
         elif opcion == "3":
-            registrar_profesor()
+            gestionar_profesores()
         elif opcion == "4":
             registrar_clase()
         elif opcion == "5":

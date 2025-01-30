@@ -1,16 +1,50 @@
 [
     {
-        "dni": "5",
-        "nombre": "pepe",
+        "dni": "1",
+        "nombre": "Pepa",
         "apellido_1": "",
         "apellido_2": "",
-        "permisos": []
+        "permisos": [
+            {
+                "tipo_permiso": "B",
+                "precio_matricula": 500.0,
+                "clases_incluidas": 20,
+                "precio_por_clase": 25.0,
+                "precio_examen": 50.0,
+                "precio_renovacion": 30.0
+            }
+        ]
     },
     {
         "dni": "5",
         "nombre": "pepe",
         "apellido_1": "",
         "apellido_2": "",
-        "permisos": []
+        "permisos": [
+            {
+                "tipo_permiso": "A",
+                "precio_matricula": 400.0,
+                "clases_incluidas": 25,
+                "precio_por_clase": 30.0,
+                "precio_examen": 60.0,
+                "precio_renovacion": 35.0
+            },
+            {
+                "tipo_permiso": "B",
+                "precio_matricula": 500.0,
+                "clases_incluidas": 20,
+                "precio_por_clase": 25.0,
+                "precio_examen": 50.0,
+                "precio_renovacion": 30.0
+            },
+            {
+                "tipo_permiso": "C",
+                "precio_matricula": 900.0,
+                "clases_incluidas": 40,
+                "precio_por_clase": 45.0,
+                "precio_examen": 90.0,
+                "precio_renovacion": 50.0
+            }
+        ]
     }
 ]

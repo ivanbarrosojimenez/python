@@ -2,19 +2,18 @@
     {
         "alumno": {
             "dni": "1",
-            "nombre": "Pepe2",
-            "apellido_1": "Garc\u00eda",
+            "nombre": "1",
+            "apellido_1": "1",
             "apellido_2": "1",
             "curso": "",
-            "fecha_matriculacion": "10/02/2025",
+            "fecha_matriculacion": "",
             "domicilio": "",
             "municipio": "",
             "provincia": "",
             "telefono1": "",
             "telefono2": "",
-            "correo": "ivan@correo.es",
+            "correo": "",
             "num_clases": 0,
-            "profesor": "",
             "examenes_teoricos": [],
             "examenes_circulacion": [],
             "total_anticipos": 0.0

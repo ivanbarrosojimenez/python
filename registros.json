@@ -1,0 +1,39 @@
+[
+    {
+        "alumno": {
+            "dni": "1",
+            "nombre": "Pepe2",
+            "apellido_1": "Garc\u00eda",
+            "apellido_2": "1",
+            "curso": "",
+            "fecha_matriculacion": "10/02/2025",
+            "domicilio": "",
+            "municipio": "",
+            "provincia": "",
+            "telefono1": "",
+            "telefono2": "",
+            "correo": "ivan@correo.es",
+            "num_clases": 0,
+            "profesor": "",
+            "examenes_teoricos": [],
+            "examenes_circulacion": [],
+            "total_anticipos": 0.0
+        },
+        "fecha_registro": "1",
+        "permiso": {
+            "tipo_permiso": "B",
+            "precio_matricula": 500.0,
+            "clases_incluidas": 20,
+            "precio_por_clase": 25.0,
+            "precio_examen": 50.0,
+            "precio_renovacion": 30.0
+        },
+        "profesor": {
+            "dni": "5",
+            "nombre": "pepe",
+            "apellido_1": "",
+            "apellido_2": "",
+            "permisos": []
+        }
+    }
+]

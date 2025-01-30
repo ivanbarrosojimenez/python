@@ -7,6 +7,7 @@ import Factura
 import Vehiculo
 from feedback2.Clase import Clase
 from feedback2.Alumno import Alumno
+from feedback2.PDFGenerator import PDFGenerator
 from feedback2.Registro import Registro
 from feedback2.Permiso import Permiso
 from feedback2.Profesor import Profesor
@@ -135,6 +136,10 @@ def consultar_alumno():
     alumno = buscar_alumno(dni)
     if alumno:
         print(f"Alumno encontrado: {alumno.to_string()}")
+        # Ejemplo de uso:
+        filename = f"{alumno.dni}_{alumno.nombre}.pdf"
+        pdf_gen = PDFGenerator(filename)
+        pdf_gen.generate_pdf(alumno.to_string())
     else:
         print(f"No se encontró un alumno con DNI {dni}.")
 

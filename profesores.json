@@ -4,6 +4,11 @@
         "nombre": "Pepa",
         "primer_apellido": "",
         "segundo_apellido": "",
+        "fecha_nacimiento": "",
+        "vehiculo": null,
+        "tipo_vehiculo": null,
+        "itv": null,
+        "gastos_combustible": null,
         "permisos": [
             {
                 "tipo_permiso": "B",
@@ -20,6 +25,11 @@
         "nombre": "pepe",
         "primer_apellido": "",
         "segundo_apellido": "",
+        "fecha_nacimiento": "",
+        "vehiculo": null,
+        "tipo_vehiculo": null,
+        "itv": null,
+        "gastos_combustible": null,
         "permisos": [
             {
                 "tipo_permiso": "A",

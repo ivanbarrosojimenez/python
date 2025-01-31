@@ -5,9 +5,9 @@
         "segundo_apellido": "segundo_apellido",
         "dni": "dni",
         "fecha_nacimiento": "fecha_nacimiento",
-        "num_registro": null,
-        "fecha_registro": null,
-        "permiso_opta": "permiso_opta",
+        "num_registro": "2003/0000",
+        "fecha_registro": "01/02/2003",
+        "permiso_opta": "B",
         "domicilio": "domicilio",
         "municipio": "municipio",
         "provincia": "provincia",
@@ -15,10 +15,10 @@
         "telefono2": "telefono2",
         "correo": "correo",
         "num_clases": "num_clases",
+        "profesor": null,
         "examenes_teoricos": "examenes_teoricos",
         "examenes_circulacion": "examenes_circulacion",
-        "total_anticipos": "total_anticipos",
-        "permiso_opta": "permiso_opta"
+        "total_anticipos": "total_anticipos"
     },
     {
         "nombre": "a",
@@ -26,9 +26,9 @@
         "segundo_apellido": "ddd",
         "dni": "00000000G",
         "fecha_nacimiento": "02/02/1990",
-        "num_registro": null,
-        "fecha_registro": null,
-        "permiso_opta": "B",
+        "num_registro": "2024/0002",
+        "fecha_registro": "03/04/2024",
+        "permiso_opta": "C1",
         "domicilio": "",
         "municipio": "",
         "provincia": "",
@@ -36,10 +36,10 @@
         "telefono2": "",
         "correo": "",
         "num_clases": 0,
+        "profesor": null,
         "examenes_teoricos": [],
         "examenes_circulacion": [],
-        "total_anticipos": 0.0,
-        "permiso_opta": "B"
+        "total_anticipos": 0.0
     },
     {
         "nombre": "aaa",
@@ -57,10 +57,10 @@
         "telefono2": "",
         "correo": "",
         "num_clases": 0,
+        "profesor": null,
         "examenes_teoricos": [],
         "examenes_circulacion": [],
-        "total_anticipos": 0.0,
-        "permiso_opta": "B"
+        "total_anticipos": 0.0
     },
     {
         "nombre": "Pepe",
@@ -78,9 +78,9 @@
         "telefono2": "",
         "correo": "",
         "num_clases": 0,
+        "profesor": null,
         "examenes_teoricos": [],
         "examenes_circulacion": [],
-        "total_anticipos": 0.0,
-        "permiso_opta": "B"
+        "total_anticipos": 0.0
     }
 ]

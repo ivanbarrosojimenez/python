@@ -2,7 +2,9 @@
 from feedback2.Registro import Registro
 
 class Alumno(Registro):
-    def __init__(self, nombre='', primer_apellido='', segundo_apellido='', dni='', fecha_nacimiento='', fecha_registro=None, num_registro=None, permiso_opta=None, domicilio='', municipio='', provincia='', telefono1='', telefono2='', correo='', num_clases=0, examenes_teoricos=None, examenes_circulacion=None, total_anticipos=0.0):
+    def __init__(self, nombre='', primer_apellido='', segundo_apellido='', dni='', fecha_nacimiento='',
+                 fecha_registro=None, num_registro=None, permiso_opta=None, domicilio='', municipio='', provincia='',
+                 telefono1='', telefono2='', correo='', num_clases=0, profesor=None, examenes_teoricos=None, examenes_circulacion=None, total_anticipos=0.0):
         super().__init__(nombre, primer_apellido, segundo_apellido, dni, fecha_nacimiento, fecha_registro, num_registro, permiso_opta)
         self._domicilio = domicilio
         self._municipio = municipio
@@ -11,9 +13,18 @@ class Alumno(Registro):
         self._telefono2 = telefono2
         self._correo = correo
         self._num_clases = num_clases
+        self._profesor = profesor
         self._examenes_teoricos = examenes_teoricos if examenes_teoricos is not None else []
         self._examenes_circulacion = examenes_circulacion if examenes_circulacion is not None else []
         self._total_anticipos = total_anticipos
+
+    @property
+    def profesor(self):
+        return self._profesor
+
+    @profesor.setter
+    def profesor(self, value):
+        self._profesor = value
 
     @property
     def examenes_teoricos(self):
@@ -121,10 +132,11 @@ class Alumno(Registro):
             'telefono2': self._telefono2,
             'correo': self._correo,
             'num_clases': self._num_clases,
+            'profesor': self._profesor,
             'examenes_teoricos': self._examenes_teoricos,
             'examenes_circulacion': self._examenes_circulacion,
             'total_anticipos': self._total_anticipos,
-            'tipo_permiso': self.permiso_opta
+            'permiso_opta': self.permiso_opta
         }
 
 
@@ -147,7 +159,20 @@ class Alumno(Registro):
                 f"|  |  Teléfono 2: {self._telefono2}\n"
                 f"|  |  Correo: {self._correo}\n"
                 f"|  |  Número de Clases: {self._num_clases}\n"
+                f"|  |  Profesor: {self.profesor}\n"
                 f"|  |  Exámenes Teóricos: {self._examenes_teoricos}\n"
                 f"|  |  Exámenes de Circulación: {self._examenes_circulacion}\n"
                 f"|  |  Total Anticipos: {self._total_anticipos}\n"
+                f"----------------------------------------------\n")
+    def mostrar_datos_basicos(self):
+        return (f"----------------------------------------------\n"
+                f"| Número de Registro: {self._num_registro}\n"
+                f"|  Fecha de Registro: {self._fecha_registro}\n"
+                f"|  Permiso Opta: {self._permiso_opta}\n"
+                f"|  ---------\n"
+                f"|  |  Nombre: {self.nombre}\n"
+                f"|  |  Primer Apellido: {self.primer_apellido}\n"
+                f"|  |  Segundo Apellido: {self.segundo_apellido}\n"
+                f"|  |  DNI: {self.dni}\n"
+                f"|  |  Fecha de Nacimiento: {self.fecha_nacimiento}\n"
                 f"----------------------------------------------\n")

@@ -346,6 +346,9 @@ def buscar_registros():
 def imprime_disponibles(profesores_disponibles):
     for i, p in enumerate(profesores_disponibles, start=1):
         print(f"{i}. {p.nombre}")
+def imprime_lista(profesores_disponibles):
+    for i, p in enumerate(profesores_disponibles, start=1):
+        print(f"{i}. {p}")
 
 
 def solicitar_dni(mensaje):
@@ -427,24 +430,45 @@ def alta_registro():
     except Exception as e:
         print(f"Error al añadir nuevo registro: {e}")
 
+
+def buscar_id_registros():
+    return [registro.num_registro for registro in alumnos]
+
+
 def editar_registro():
     try:
-        alumno_dni = input("Ingrese el DNI del alumno del registro a editar: ")
-        registro = buscar_registro(alumno_dni)
-        if not registro:
-            print(f"No se encontró un registro para el alumno con DNI {alumno_dni}.")
+        ids_registros = buscar_id_registros()
+        if not ids_registros:
+            print(f"No hay profesores registros disponibles, crea uno primero.")
             return
-        print(f"Registro encontrado: {registro.to_string()}")
-        fecha_registro = input("Ingrese la nueva fecha de registro: ")
-        permiso = input("Ingrese el nuevo permiso: ")
-        profesor_dni = input("Ingrese el nuevo DNI del profesor: ")
+        imprime_lista(ids_registros)
+        indice_registro = obtener_indice_respuesta("Seleccione el registro: ", ids_registros)
+
+        registro = alumnos[int(indice_registro) - 1]
+
+
+        print(f"Editando registro: {registro.mostrar_datos_basicos()}")
+
+        fecha_registro = input("Ingrese la nueva fecha de registro (vacío para no modificar): ")
+        year = fecha_registro.split('/')[2]
+        num_registro = f"{year}/{int(indice_registro):04d}"
+
+        permisos_disponibles = [permiso.tipo_permiso for permiso in permisos]
+        print(f"Tipos de permiso disponibles:{permisos_disponibles}")
+        permiso = solicitar_tipo_permiso()
+        permiso_opta = permiso.tipo_permiso
+
+        '''profesor_dni = input("Ingrese el nuevo DNI del profesor (vacío para no modificar): ")
         profesor = buscar_profesor(profesor_dni)
         if not profesor:
             print(f"No se encontró un profesor con DNI {profesor_dni}.")
             return
-        registro.fecha_registro = fecha_registro
-        registro.permiso = permiso
         registro.profesor = profesor
+
+        '''
+        registro.fecha_registro = fecha_registro
+        registro.permiso_opta = permiso_opta
+        registro.num_registro = num_registro
         guardar_datos_generico('registros.json', alumnos)
         print("Registro actualizado correctamente.")
     except Exception as e:
@@ -460,7 +484,7 @@ def consultar_registro():
 
 def listar_registros():
     for alumno in alumnos:
-        print(alumno.mostrar_datos())
+        print(alumno.mostrar_datos_basicos())
 
 def buscar_registro(alumno_dni):
     for registro in alumnos:

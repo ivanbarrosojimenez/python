@@ -1,56 +1,153 @@
 # feedback2/Alumno.py
-from Persona import Persona
+from feedback2.Registro import Registro
 
-class Alumno(Persona):
-    def __init__(self, dni, nombre, apellido_1, apellido_2, curso='', fecha_matriculacion='', domicilio='', municipio='', provincia='', telefono1='', telefono2='', correo='', num_clases=0, examenes_teoricos=None, examenes_circulacion=None, total_anticipos=0.0):
-        super().__init__(dni, nombre, apellido_1, apellido_2)
-        self.curso = curso
-        self.fecha_matriculacion = fecha_matriculacion
-        self.domicilio = domicilio
-        self.municipio = municipio
-        self.provincia = provincia
-        self.telefono1 = telefono1
-        self.telefono2 = telefono2
-        self.correo = correo
-        self.num_clases = num_clases
-        self.examenes_teoricos = examenes_teoricos if examenes_teoricos is not None else []
-        self.examenes_circulacion = examenes_circulacion if examenes_circulacion is not None else []
-        self.total_anticipos = total_anticipos
+class Alumno(Registro):
+    def __init__(self, nombre='', primer_apellido='', segundo_apellido='', dni='', fecha_nacimiento='', fecha_registro=None, num_registro=None, permiso_opta=None, domicilio='', municipio='', provincia='', telefono1='', telefono2='', correo='', num_clases=0, examenes_teoricos=None, examenes_circulacion=None, total_anticipos=0.0):
+        super().__init__(nombre, primer_apellido, segundo_apellido, dni, fecha_nacimiento, fecha_registro, num_registro, permiso_opta)
+        self._domicilio = domicilio
+        self._municipio = municipio
+        self._provincia = provincia
+        self._telefono1 = telefono1
+        self._telefono2 = telefono2
+        self._correo = correo
+        self._num_clases = num_clases
+        self._examenes_teoricos = examenes_teoricos if examenes_teoricos is not None else []
+        self._examenes_circulacion = examenes_circulacion if examenes_circulacion is not None else []
+        self._total_anticipos = total_anticipos
+
+    @property
+    def examenes_teoricos(self):
+        return self._examenes_teoricos
+
+    @examenes_teoricos.setter
+    def examenes_teoricos(self, value):
+        self._examenes_teoricos = value
+
+    @property
+    def domicilio(self):
+        return self._domicilio
+
+    @domicilio.setter
+    def domicilio(self, value):
+        self._domicilio = value
+
+    @property
+    def total_anticipos(self):
+        return self._total_anticipos
+
+    @total_anticipos.setter
+    def total_anticipos(self, value):
+        self._total_anticipos = value
+
+    @property
+    def municipio(self):
+        return self._municipio
+
+    @municipio.setter
+    def municipio(self, value):
+        self._municipio = value
+
+    @property
+    def num_clases(self):
+        return self._num_clases
+
+    @num_clases.setter
+    def num_clases(self, value):
+        self._num_clases = value
+
+    @property
+    def correo(self):
+        return self._correo
+
+    @correo.setter
+    def correo(self, value):
+        self._correo = value
+
+    @property
+    def telefono1(self):
+        return self._telefono1
+
+    @telefono1.setter
+    def telefono1(self, value):
+        self._telefono1 = value
+
+    @property
+    def examenes_circulacion(self):
+        return self._examenes_circulacion
+
+    @examenes_circulacion.setter
+    def examenes_circulacion(self, value):
+        self._examenes_circulacion = value
+
+    @property
+    def telefono2(self):
+        return self._telefono2
+
+    @telefono2.setter
+    def telefono2(self, value):
+        self._telefono2 = value
+
+    @property
+    def provincia(self):
+        return self._provincia
+
+    @provincia.setter
+    def provincia(self, value):
+        self._provincia = value
 
     def agregar_examen_teorico(self, fecha_hora):
-        self.examenes_teoricos.append(fecha_hora)
+        self._examenes_teoricos.append(fecha_hora)
 
     def agregar_examen_circulacion(self, fecha_hora):
-        self.examenes_circulacion.append(fecha_hora)
+        self._examenes_circulacion.append(fecha_hora)
 
     def agregar_clases(self, num):
-        self.num_clases += num
+        self._num_clases += num
 
     def to_json(self):
         return {
-            'dni': self.dni,
             'nombre': self.nombre,
-            'apellido_1': self.apellido_1,
-            'apellido_2': self.apellido_2,
-            'curso': self.curso,
-            'fecha_matriculacion': self.fecha_matriculacion,
-            'domicilio': self.domicilio,
-            'municipio': self.municipio,
-            'provincia': self.provincia,
-            'telefono1': self.telefono1,
-            'telefono2': self.telefono2,
-            'correo': self.correo,
-            'num_clases': self.num_clases,
-            'examenes_teoricos': self.examenes_teoricos,
-            'examenes_circulacion': self.examenes_circulacion,
-            'total_anticipos': self.total_anticipos
+            'primer_apellido': self.primer_apellido,
+            'segundo_apellido': self.segundo_apellido,
+            'dni': self.dni,
+            'fecha_nacimiento': self.fecha_nacimiento,
+            'num_registro': self._num_registro,
+            'fecha_registro': self._fecha_registro,
+            'permiso_opta': self._permiso_opta,
+            'domicilio': self._domicilio,
+            'municipio': self._municipio,
+            'provincia': self._provincia,
+            'telefono1': self._telefono1,
+            'telefono2': self._telefono2,
+            'correo': self._correo,
+            'num_clases': self._num_clases,
+            'examenes_teoricos': self._examenes_teoricos,
+            'examenes_circulacion': self._examenes_circulacion,
+            'total_anticipos': self._total_anticipos,
+            'tipo_permiso': self.permiso_opta
         }
 
-    def to_string(self):
-        return (f"DNI: {self.dni}, Nombre: {self.nombre}, Apellido 1: {self.apellido_1}, "
-                f"Apellido 2: {self.apellido_2}, Curso: {self.curso}, Fecha de Matriculación: {self.fecha_matriculacion}, "
-                f"Domicilio: {self.domicilio}, Municipio: {self.municipio}, Provincia: {self.provincia}, "
-                f"Teléfono 1: {self.telefono1}, Teléfono 2: {self.telefono2}, Correo: {self.correo}, "
-                f"Número de Clases: {self.num_clases}, "
-                f"Exámenes Teóricos: {self.examenes_teoricos}, Exámenes de Circulación: {self.examenes_circulacion}, "
-                f"Total Anticipos: {self.total_anticipos}")
+
+    def mostrar_datos(self):
+        return (f"----------------------------------------------\n"
+                f"| Número de Registro: {self._num_registro}\n"
+                f"|  Fecha de Registro: {self._fecha_registro}\n"
+                f"|  Permiso Opta: {self._permiso_opta}\n"
+                f"|  ---------\n"
+                f"|  |  Nombre: {self.nombre}\n"
+                f"|  |  Primer Apellido: {self.primer_apellido}\n"
+                f"|  |  Segundo Apellido: {self.segundo_apellido}\n"
+                f"|  |  DNI: {self.dni}\n"
+                f"|  |  Fecha de Nacimiento: {self.fecha_nacimiento}\n"
+                f"|  |---------\n"
+                f"|  |  Domicilio: {self._domicilio}\n"
+                f"|  |  Municipio: {self._municipio}\n"
+                f"|  |  Provincia: {self._provincia}\n"
+                f"|  |  Teléfono 1: {self._telefono1}\n"
+                f"|  |  Teléfono 2: {self._telefono2}\n"
+                f"|  |  Correo: {self._correo}\n"
+                f"|  |  Número de Clases: {self._num_clases}\n"
+                f"|  |  Exámenes Teóricos: {self._examenes_teoricos}\n"
+                f"|  |  Exámenes de Circulación: {self._examenes_circulacion}\n"
+                f"|  |  Total Anticipos: {self._total_anticipos}\n"
+                f"----------------------------------------------\n")

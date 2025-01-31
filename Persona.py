@@ -1,43 +1,63 @@
-# Clase base Persona
+# feedback2/Persona.py
 class Persona:
-    def __init__(self, dni, nombre, apellido_1, apellido_2):
-        self.__dni = dni
-        self.__nombre = nombre
-        self.__apellido_1 = apellido_1
-        self.__apellido_2 = apellido_2
-
-    @property
-    def dni(self):
-        return self.__dni
-
-    @dni.setter
-    def dni(self, value):
-        self.__dni = value
-
-    @property
-    def apellido_1(self):
-        return self.__apellido_1
-
-    @apellido_1.setter
-    def apellido_1(self, value):
-        self.__apellido_1 = value
-
-    @property
-    def apellido_2(self):
-        return self.__apellido_2
-
-    @apellido_2.setter
-    def apellido_2(self, value):
-        self.__apellido_2 = value
+    def __init__(self, nombre='', primer_apellido='', segundo_apellido=''
+                 , dni='', fecha_nacimiento=''):
+        self._nombre = nombre
+        self._primer_apellido = primer_apellido
+        self._segundo_apellido = segundo_apellido
+        self._dni = dni
+        self._fecha_nacimiento = fecha_nacimiento
 
     @property
     def nombre(self):
-        return self.__nombre
+        return self._nombre
 
     @nombre.setter
     def nombre(self, value):
-        self.__nombre = value
+        self._nombre = value
 
-    def to_string(self):
-        return (f"DNI: {self.dni}, Nombre: {self.nombre}, Apellido 1: {self.apellido_1}, "
-                f"Apellido 2: {self.apellido_2}")
+    @property
+    def primer_apellido(self):
+        return self._primer_apellido
+
+    @primer_apellido.setter
+    def primer_apellido(self, value):
+        self._primer_apellido = value
+
+    @property
+    def segundo_apellido(self):
+        return self._segundo_apellido
+
+    @segundo_apellido.setter
+    def segundo_apellido(self, value):
+        self._segundo_apellido = value
+
+    @property
+    def dni(self):
+        return self._dni
+
+    @dni.setter
+    def dni(self, value):
+        self._dni = value
+
+    @property
+    def fecha_nacimiento(self):
+        return self._fecha_nacimiento
+
+    @fecha_nacimiento.setter
+    def fecha_nacimiento(self, value):
+        self._fecha_nacimiento = value
+
+    def to_json(self):
+        return {
+            'nombre': self._nombre,
+            'primer_apellido': self._primer_apellido,
+            'segundo_apellido': self._segundo_apellido,
+            'dni': self._dni,
+            'fecha_nacimiento': self._fecha_nacimiento
+        }
+
+    def mostrar_datos(self):
+        return (f"Nombre: {self._nombre}, Primer Apellido: {self._primer_apellido}, "
+                f"Segundo Apellido: {self._segundo_apellido}, DNI: {self._dni}, "
+                f"Fecha de Nacimiento: {self._fecha_nacimiento}")

@@ -1,13 +1,20 @@
-from feedback2.Alumno import Alumno
-from feedback2.Permiso import Permiso
-from feedback2.Profesor import Profesor
+# feedback2/Registro.py
+from feedback2.Persona import Persona
 
-class Registro:
-    def __init__(self, alumno, fecha_registro, permiso, profesor):
-        self._alumno = alumno if isinstance(alumno, Alumno) else Alumno(**alumno)
+class Registro(Persona):
+    def __init__(self, nombre='', primer_apellido='', segundo_apellido='', dni='', fecha_nacimiento='', fecha_registro=None, num_registro=None, permiso_opta=None):
+        super().__init__(nombre, primer_apellido, segundo_apellido, dni, fecha_nacimiento)
+        self._num_registro = num_registro
         self._fecha_registro = fecha_registro
-        self._permiso = permiso if isinstance(permiso, Permiso) else Permiso(**permiso)
-        self._profesor = profesor if isinstance(profesor, Profesor) else Profesor(**profesor)
+        self._permiso_opta = permiso_opta
+
+    @property
+    def permiso_opta(self):
+        return self._permiso_opta
+
+    @permiso_opta.setter
+    def permiso_opta(self, value):
+        self._permiso_opta = value
 
     @property
     def fecha_registro(self):
@@ -18,43 +25,27 @@ class Registro:
         self._fecha_registro = value
 
     @property
-    def permiso(self):
-        return self._permiso
+    def num_registro(self):
+        return self._num_registro
 
-    @permiso.setter
-    def permiso(self, value):
-        self._permiso = value if isinstance(value, Permiso) else Permiso(**value)
-
-    @property
-    def alumno(self):
-        return self._alumno
-
-    @alumno.setter
-    def alumno(self, value):
-        self._alumno = value if isinstance(value, Alumno) else Alumno(**value)
-
-    @property
-    def profesor(self):
-        return self._profesor
-
-    @profesor.setter
-    def profesor(self, value):
-        self._profesor = value if isinstance(value, Profesor) else Profesor(**value)
-
-    def to_string(self):
-        alumno_str = self._alumno.to_string() if isinstance(self._alumno, Alumno) else str(self._alumno)
-        permiso_str = self._permiso.to_string() if isinstance(self._permiso, Permiso) else str(self._permiso)
-        profesor_str = self._profesor.to_string() if isinstance(self._profesor, Profesor) else str(self._profesor)
-
-        return (f'Alumno: {alumno_str}\n'
-                f'Fecha de Registro: {self._fecha_registro}\n'
-                f'Permiso: {permiso_str}\n'
-                f'Profesor: {profesor_str}')
+    @num_registro.setter
+    def num_registro(self, value):
+        self._num_registro = value
 
     def to_json(self):
         return {
-            'alumno': self._alumno.to_json(),
+            'nombre': self.nombre,
+            'primer_apellido': self.primer_apellido,
+            'segundo_apellido': self.segundo_apellido,
+            'dni': self.dni,
+            'fecha_nacimiento': self.fecha_nacimiento,
+            'num_registro': self._num_registro,
             'fecha_registro': self._fecha_registro,
-            'permiso': self._permiso.to_json(),
-            'profesor': self._profesor.to_json()
+            'permiso_opta': self._permiso_opta
         }
+
+    def mostrar_datos(self):
+        return (f"Nombre: {self.nombre}, Primer Apellido: {self.primer_apellido}, "
+                f"Segundo Apellido: {self.segundo_apellido}, DNI: {self.dni}, "
+                f"Fecha de Nacimiento: {self.fecha_nacimiento}, Número de Registro: {self._num_registro}, "
+                f"Fecha de Registro: {self._fecha_registro}, Permiso Opta: {self._permiso_opta}")

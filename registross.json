@@ -1,0 +1,204 @@
+[
+    {
+        "num_registro": "01/1",
+        "tipo_permiso": "A",
+        "fecha_registro": "01/01/0902",
+        "permiso": {
+            "tipo_permiso": "A",
+            "precio_matricula": 400.0,
+            "clases_incluidas": 25,
+            "precio_por_clase": 30.0,
+            "precio_examen": 60.0,
+            "precio_renovacion": 35.0
+        },
+        "nombre": "Pepe",
+        "primer_apellido": "Perez",
+        "segundo_apellido": "Amador",
+        "dni": "80901234F",
+        "fecha_nacimiento": "01/01/1990",
+        "profesor": {
+            "dni": "pepe",
+            "nombre": "",
+            "primer_apellido": "",
+            "segundo_apellido": "5",
+            "permisos": [
+                {
+                    "tipo_permiso": "A",
+                    "precio_matricula": 400.0,
+                    "clases_incluidas": 25,
+                    "precio_por_clase": 30.0,
+                    "precio_examen": 60.0,
+                    "precio_renovacion": 35.0
+                },
+                {
+                    "tipo_permiso": "B",
+                    "precio_matricula": 500.0,
+                    "clases_incluidas": 20,
+                    "precio_por_clase": 25.0,
+                    "precio_examen": 50.0,
+                    "precio_renovacion": 30.0
+                },
+                {
+                    "tipo_permiso": "C",
+                    "precio_matricula": 900.0,
+                    "clases_incluidas": 40,
+                    "precio_por_clase": 45.0,
+                    "precio_examen": 90.0,
+                    "precio_renovacion": 50.0
+                }
+            ]
+        }
+    },
+    {
+        "num_registro": "01/2",
+        "tipo_permiso": "A",
+        "fecha_registro": "01/01/0902",
+        "permiso": {
+            "tipo_permiso": "A",
+            "precio_matricula": 400.0,
+            "clases_incluidas": 25,
+            "precio_por_clase": 30.0,
+            "precio_examen": 60.0,
+            "precio_renovacion": 35.0
+        },
+
+        "nombre": "Pepa",
+        "primer_apellido": "Perez",
+        "segundo_apellido": "Amador",
+        "dni": "00001234F",
+        "fecha_nacimiento": "01/01/1990",
+
+        "profesor": {
+            "dni": "pepe",
+            "nombre": "",
+            "primer_apellido": "",
+            "segundo_apellido": "5",
+            "permisos": [
+                {
+                    "tipo_permiso": "A",
+                    "precio_matricula": 400.0,
+                    "clases_incluidas": 25,
+                    "precio_por_clase": 30.0,
+                    "precio_examen": 60.0,
+                    "precio_renovacion": 35.0
+                },
+                {
+                    "tipo_permiso": "B",
+                    "precio_matricula": 500.0,
+                    "clases_incluidas": 20,
+                    "precio_por_clase": 25.0,
+                    "precio_examen": 50.0,
+                    "precio_renovacion": 30.0
+                },
+                {
+                    "tipo_permiso": "C",
+                    "precio_matricula": 900.0,
+                    "clases_incluidas": 40,
+                    "precio_por_clase": 45.0,
+                    "precio_examen": 90.0,
+                    "precio_renovacion": 50.0
+                }
+            ]
+        }
+    },
+    {
+        "num_registro": "2025/3",
+        "tipo_permiso": "C",
+        "fecha_registro": "26/01/2025",
+        "permiso": {
+            "tipo_permiso": "C",
+            "precio_matricula": 900.0,
+            "clases_incluidas": 40,
+            "precio_por_clase": 45.0,
+            "precio_examen": 90.0,
+            "precio_renovacion": 50.0
+        },
+        "nombre": "70809141F",
+        "primer_apellido": "ivan",
+        "segundo_apellido": "barroso",
+        "dni": "jimenez",
+        "fecha_nacimiento": "26/02/1990",
+        "profesor": {
+            "dni": "",
+            "nombre": "",
+            "primer_apellido": "12345678F",
+            "segundo_apellido": "pepe",
+            "permisos": [
+                {
+                    "tipo_permiso": "A",
+                    "precio_matricula": 400.0,
+                    "clases_incluidas": 25,
+                    "precio_por_clase": 30.0,
+                    "precio_examen": 60.0,
+                    "precio_renovacion": 35.0
+                },
+                {
+                    "tipo_permiso": "B",
+                    "precio_matricula": 500.0,
+                    "clases_incluidas": 20,
+                    "precio_por_clase": 25.0,
+                    "precio_examen": 50.0,
+                    "precio_renovacion": 30.0
+                },
+                {
+                    "tipo_permiso": "C",
+                    "precio_matricula": 900.0,
+                    "clases_incluidas": 40,
+                    "precio_por_clase": 45.0,
+                    "precio_examen": 90.0,
+                    "precio_renovacion": 50.0
+                }
+            ]
+        }
+    },
+    {
+        "num_registro": "1996/0004",
+        "tipo_permiso": "B",
+        "fecha_registro": "26/01/1996",
+        "permiso": {
+            "tipo_permiso": "B",
+            "precio_matricula": 500.0,
+            "clases_incluidas": 20,
+            "precio_por_clase": 25.0,
+            "precio_examen": 50.0,
+            "precio_renovacion": 30.0
+        },
+        "nombre": "80909889F",
+        "primer_apellido": "Jose",
+        "segundo_apellido": "Miig",
+        "dni": "modas",
+        "fecha_nacimiento": "01/09/1987",
+        "profesor": {
+            "dni": "",
+            "nombre": "12345678F",
+            "primer_apellido": "pepe",
+            "segundo_apellido": "",
+            "permisos": [
+                {
+                    "tipo_permiso": "A",
+                    "precio_matricula": 400.0,
+                    "clases_incluidas": 25,
+                    "precio_por_clase": 30.0,
+                    "precio_examen": 60.0,
+                    "precio_renovacion": 35.0
+                },
+                {
+                    "tipo_permiso": "B",
+                    "precio_matricula": 500.0,
+                    "clases_incluidas": 20,
+                    "precio_por_clase": 25.0,
+                    "precio_examen": 50.0,
+                    "precio_renovacion": 30.0
+                },
+                {
+                    "tipo_permiso": "C",
+                    "precio_matricula": 900.0,
+                    "clases_incluidas": 40,
+                    "precio_por_clase": 45.0,
+                    "precio_examen": 90.0,
+                    "precio_renovacion": 50.0
+                }
+            ]
+        }
+    }
+]

@@ -18,7 +18,7 @@ class Permiso:
         }
 
 
-    def to_string(self):
+    def mostrar_datos(self):
         return (f"Tipo Permiso: {self.tipo_permiso}, Precio Matrícula: {self.precio_matricula}, "
                 f"Clases Incluidas: {self.clases_incluidas}, Precio por Clase: {self.precio_por_clase}, "
                 f"Precio Examen: {self.precio_examen}, Precio Renovación: {self.precio_renovacion}")

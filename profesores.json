@@ -2,8 +2,8 @@
     {
         "dni": "1",
         "nombre": "Pepa",
-        "apellido_1": "",
-        "apellido_2": "",
+        "primer_apellido": "",
+        "segundo_apellido": "",
         "permisos": [
             {
                 "tipo_permiso": "B",
@@ -16,10 +16,10 @@
         ]
     },
     {
-        "dni": "5",
+        "dni": "12345678F",
         "nombre": "pepe",
-        "apellido_1": "",
-        "apellido_2": "",
+        "primer_apellido": "",
+        "segundo_apellido": "",
         "permisos": [
             {
                 "tipo_permiso": "A",

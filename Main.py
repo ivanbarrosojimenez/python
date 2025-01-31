@@ -1,6 +1,7 @@
 
 import json
 import os
+import re
 
 import Anticipo
 import Factura
@@ -8,6 +9,7 @@ import Vehiculo
 from feedback2.Clase import Clase
 from feedback2.Alumno import Alumno
 from feedback2.PDFGenerator import PDFGenerator
+from feedback2.Persona import Persona
 from feedback2.Registro import Registro
 from feedback2.Permiso import Permiso
 from feedback2.Profesor import Profesor
@@ -15,25 +17,23 @@ from feedback2.Profesor import Profesor
 
 def mostrar_submenu_alumnos():
     print("Gestión de Alumnos")
-    print("1. Registrar Alumno")
-    print("2. Editar Alumno")
-    print("3. Consultar Alumno")
-    print("4. Listar todos los Alumnos")
-    print("5. Volver al Menú Principal")
+    print("1. Editar Alumno")
+    print("2. Consultar Alumno")
+    print("3. Listar todos los Alumnos")
+    print("0. Volver al Menú Principal")
 
 def gestionar_alumnos():
     while True:
         mostrar_submenu_alumnos()
+        print(f"-----------------")
         opcion = input("Seleccione una opción: ")
         if opcion == "1":
-            registrar_alumno()
-        elif opcion == "2":
             editar_alumno()
-        elif opcion == "3":
+        elif opcion == "2":
             consultar_alumno()
-        elif opcion == "4":
+        elif opcion == "3":
             listar_alumnos()
-        elif opcion == "5":
+        elif opcion == "0":
             break
         else:
             print("Opción no válida, por favor intente de nuevo.")
@@ -59,56 +59,60 @@ def registrar_alumno():
     except Exception as e:
         print(f"Error al registrar alumno: {e}")
 
+
+def mostrar_info_personas(personas):
+    for i, persona in enumerate(personas, start=1):
+        print(f"{i}. {persona.dni} - {persona.nombre} {persona.primer_apellido} {persona.segundo_apellido}")
+    if not personas:
+        print("No hay alumnos registrados.")
+
+
 def editar_alumno():
-    dni = input("Ingrese el DNI del alumno a editar: ")
-    alumno = buscar_alumno(dni)
-    if alumno:
-        print(f"Alumno encontrado: {alumno.to_string()}")
-        while True:
-            mostrar_submenu_editar_alumno()
-            opcion = input("Seleccione el dato a editar: ")
-            if opcion == "1":
-                nuevo_nombre = input("Ingrese el nuevo nombre del alumno: ")
-                alumno.nombre = nuevo_nombre
-            elif opcion == "2":
-                nuevo_apellido1 = input("Ingrese el nuevo primer apellido del alumno: ")
-                alumno.apellido_1 = nuevo_apellido1
-            elif opcion == "3":
-                nuevo_apellido2 = input("Ingrese el nuevo segundo apellido del alumno: ")
-                alumno.apellido_2 = nuevo_apellido2
-            elif opcion == "4":
-                nuevo_curso = input("Ingrese el nuevo curso del alumno: ")
-                alumno.curso = nuevo_curso
-            elif opcion == "5":
-                nueva_fecha_matriculacion = input("Ingrese la nueva fecha de matriculación del alumno: ")
-                alumno.fecha_matriculacion = nueva_fecha_matriculacion
-            elif opcion == "6":
-                nuevo_domicilio = input("Ingrese el nuevo domicilio del alumno: ")
-                alumno.domicilio = nuevo_domicilio
-            elif opcion == "7":
-                nuevo_municipio = input("Ingrese el nuevo municipio del alumno: ")
-                alumno.municipio = nuevo_municipio
-            elif opcion == "8":
-                nueva_provincia = input("Ingrese la nueva provincia del alumno: ")
-                alumno.provincia = nueva_provincia
-            elif opcion == "9":
-                nuevo_telefono1 = input("Ingrese el nuevo teléfono 1 del alumno: ")
-                alumno.telefono1 = nuevo_telefono1
-            elif opcion == "10":
-                nuevo_telefono2 = input("Ingrese el nuevo teléfono 2 del alumno: ")
-                alumno.telefono2 = nuevo_telefono2
-            elif opcion == "11":
-                nuevo_correo = input("Ingrese el nuevo correo del alumno: ")
-                alumno.correo = nuevo_correo
-            elif opcion == "12":
-                print("Volviendo al menú anterior...")
-                break
-            else:
-                print("Opción no válida, por favor intente de nuevo.")
-            guardar_datos_generico('alumnos.json', alumnos)
-            print("Alumno actualizado correctamente.")
-    else:
-        print(f"No se encontró un alumno con DNI {dni}.")
+    alumnos_disponibles= buscar_registros()
+    mostrar_info_personas(registro.persona for registro in alumnos_disponibles)
+    indice_alumno = obtener_indice_respuesta("Ingrese el número de Alumno a editar: ", alumnos_disponibles)
+    alumno = alumnos[int(indice_alumno) - 1]
+
+
+    print(f"-----------------")
+    print(f"Editando Alumno: {alumno.persona.dni} - {alumno.persona.nombre} {alumno.persona.primer_apellido} {alumno.persona.segundo_apellido}")
+    while True:
+        mostrar_submenu_editar_alumno()
+        opcion = input("Seleccione el dato a editar: ")
+        if opcion == "1":
+            nuevo_nombre = input("Ingrese el nuevo nombre del alumno: ")
+            alumno.persona.nombre = nuevo_nombre
+        elif opcion == "2":
+            nuevo_apellido1 = input("Ingrese el nuevo primer apellido del alumno: ")
+            alumno.persona.primer_apellido = nuevo_apellido1
+        elif opcion == "3":
+            nuevo_apellido2 = input("Ingrese el nuevo segundo apellido del alumno: ")
+            alumno.persona.segundo_apellido = nuevo_apellido2
+        elif opcion == "6":
+            nuevo_domicilio = input("Ingrese el nuevo domicilio del alumno: ")
+            alumno.domicilio = nuevo_domicilio
+        elif opcion == "7":
+            nuevo_municipio = input("Ingrese el nuevo municipio del alumno: ")
+            alumno.municipio = nuevo_municipio
+        elif opcion == "8":
+            nueva_provincia = input("Ingrese la nueva provincia del alumno: ")
+            alumno.provincia = nueva_provincia
+        elif opcion == "9":
+            nuevo_telefono1 = input("Ingrese el nuevo teléfono 1 del alumno: ")
+            alumno.telefono1 = nuevo_telefono1
+        elif opcion == "10":
+            nuevo_telefono2 = input("Ingrese el nuevo teléfono 2 del alumno: ")
+            alumno.telefono2 = nuevo_telefono2
+        elif opcion == "11":
+            nuevo_correo = input("Ingrese el nuevo correo del alumno: ")
+            alumno.correo = nuevo_correo
+        elif opcion == "12":
+            print("Volviendo al menú anterior...")
+            break
+        else:
+            print("Opción no válida, por favor intente de nuevo.")
+        guardar_datos_generico('registros.json', alumnos)
+        print("Alumno actualizado correctamente.")
 
 def mostrar_submenu_editar_alumno():
     print("Editar Alumno")
@@ -131,6 +135,12 @@ def buscar_alumno(dni):
             return alumno
     return None
 
+def buscar_alumno(dni, tipo_permiso):
+    for registro in alumnos:
+        if registro.dni == dni and registro.tipo_permiso == tipo_permiso:
+            return registro
+    return None
+
 def consultar_alumno():
     dni = input("Ingrese el DNI del alumno a consultar: ")
     alumno = buscar_alumno(dni)
@@ -145,7 +155,7 @@ def consultar_alumno():
 
 def listar_alumnos():
     for alumno in alumnos:
-        print(alumno.to_string())
+        print(alumno.mostrar_datos())
 
 def valida_alumno(dni):
     for alumno in alumnos:
@@ -274,19 +284,7 @@ def cargar_datos_generico(filename, cls):
         return []
 
 
-registros = cargar_datos_generico('registros.json', Registro)
-alumnos = cargar_datos_generico('alumnos.json', Alumno)
-permisos = cargar_datos_generico('permisos.json', Permiso)
-profesores = cargar_datos_generico('profesores.json', Profesor)
-vehiculos = cargar_datos('vehiculos.json')
-clases = cargar_datos('clases.json')
-anticipos = cargar_datos('anticipos.json')
-facturas = cargar_datos('facturas.json')
 
-for alumno in alumnos:
-    print(alumno.to_string())
-for profesor in profesores:
-    print(profesor.to_string())
 
 def mostrar_submenu_registros():
     print("Gestión de Registros")
@@ -318,30 +316,116 @@ def buscar_permiso(tipo_permiso):
             return permiso
     return None
 
-def alta_registro():
-    try:
-        alumno_dni = input("Ingrese el DNI del alumno: ")
-        alumno = buscar_alumno(alumno_dni)
-        if not alumno:
-            print(f"No se encontró un alumno con DNI {alumno_dni}.")
-            return
-        fecha_registro = input("Ingrese la fecha de registro: ")
+def validar_fecha(mensaje):
+    while True:
+        fecha_registro = input(mensaje)
+        if re.match(r'^\d{2}/\d{2}/\d{4}$', fecha_registro):
+            try:
+                day, month, year = map(int, fecha_registro.split('/'))
+                if 1 <= day <= 31 and 1 <= month <= 12 and year > 0:
+                    return fecha_registro
+                else:
+                    print("Fecha no válida. Asegúrese de que el día, mes y año sean correctos.")
+            except ValueError:
+                print("Fecha no válida. Asegúrese de que el día, mes y año sean correctos.")
+        else:
+            print("Formato de fecha no válido. Use DD/MM/AAAA.")
+
+
+def buscar_profesores(tipo_permiso):
+    return [profesor for profesor in profesores if tipo_permiso in [permiso.tipo_permiso for permiso in profesor.permisos]]
+
+
+def buscar_alumnos():
+    return [registro.persona for registro in alumnos]
+
+def buscar_registros():
+    return [registro for registro in alumnos]
+
+
+def imprime_disponibles(profesores_disponibles):
+    for i, p in enumerate(profesores_disponibles, start=1):
+        print(f"{i}. {p.nombre}")
+
+
+def solicitar_dni(mensaje):
+    while True:
+        dni = input(mensaje)
+        if re.match(r'^\d{8}[A-Z]$', dni):
+            return dni
+        else:
+            print("DNI o NIF no válido. Debe tener 8 dígitos seguidos de una letra mayúscula.")
+
+
+def obtener_indice_respuesta(param, profesores_disponibles):
+    while True:
+        indice_profesor = input(param)
+        if indice_profesor.isdigit() and 1 <= int(indice_profesor) <= len(profesores_disponibles):
+            return indice_profesor
+        else:
+            print("Índice no válido. Introduzca un número válido.")
+
+
+def solicitar_tipo_permiso():
+    while True:
         tipo_permiso = input("Ingrese el tipo de permiso: ")
         permiso = buscar_permiso(tipo_permiso)
-        if not permiso:
+        if permiso:
+            return permiso
+        else:
             print(f"No se encontró un permiso de tipo {tipo_permiso}.")
+
+def alta_registro():
+    try:
+        #persona = Persona("nombre", "primer_apellido", "segundo_apellido", "dni", "fecha_nacimiento")
+        #registro = Registro("nombre", "primer_apellido", "segundo_apellido", "dni", "fecha_nacimiento", "fecha_registro", "num_registro", "permiso_opta")
+        #alumno = Alumno("nombre", "primer_apellido", "segundo_apellido", "dni", "fecha_nacimiento", "fecha_registro", "num_registro", "permiso_opta", "domicilio", "municipio", "provincia", "telefono1", "telefono2", "correo", "num_clases", "examenes_teoricos", "examenes_circulacion", "total_anticipos")
+        #registros.append(alumno)
+
+        #guardar_datos_generico('registros.json', registros)
+
+        permisos_disponibles = [permiso.tipo_permiso for permiso in permisos]
+        print(f"Tipos de permiso disponibles:{permisos_disponibles}")
+        permiso = solicitar_tipo_permiso()
+        permiso_opta = permiso.tipo_permiso
+
+
+        '''profesores_disponibles = buscar_profesores(permiso_opta)
+        if not profesores_disponibles:
+            print(f"No hay profesores disponibles para el permiso {permiso_opta}, da de alta primero un profesor para ese permiso")
             return
-        profesor_dni = input("Ingrese el DNI del profesor: ")
-        profesor = buscar_profesor(profesor_dni)
-        if not profesor:
-            print(f"No se encontró un profesor con DNI {profesor_dni}.")
+        imprime_disponibles(profesores_disponibles)
+        indice_profesor = obtener_indice_respuesta("Seleccione el profesor: ", profesores_disponibles)
+        profesor = profesores_disponibles[int(indice_profesor) - 1]
+        '''
+        alumno_dni = solicitar_dni("Ingrese el DNI del alumno: ")
+
+        alumno_existente = buscar_alumno(alumno_dni, permiso_opta)
+        if alumno_existente:
+            print(f"Ese Alumno ya está dado de alta para ese dni y tipo de permiso en el registro {alumno_existente.num_registro}")
             return
-        nuevo_registro = Registro(alumno, fecha_registro, permiso, profesor)
-        registros.append(nuevo_registro)
-        guardar_datos_generico('registros.json', registros)
+
+
+        nombre = input("Ingrese el nombre del Alumno: ")
+        primer_apellido = input("Ingrese el primer apellido del Alumno: ")
+        segundo_apellido = input("Ingrese el segundo apellido del Alumno: ")
+        fecha_nacimiento = validar_fecha("Ingrese fecha nacimiento del Alumno: ")
+
+        fecha_registro = validar_fecha("Ingrese la fecha de registro (DD/MM/AAAA): ")
+
+
+
+        persona = Persona(alumno_dni, nombre, primer_apellido, segundo_apellido,fecha_nacimiento)
+
+        year = fecha_registro.split('/')[2]
+        num_registro = f"{year}/{len(alumnos) + 1:04d}"
+
+        nuevo_registro = Alumno(nombre, primer_apellido, segundo_apellido, alumno_dni, fecha_nacimiento, fecha_registro, num_registro, permiso_opta)
+        alumnos.append(nuevo_registro)
+        guardar_datos_generico('registros.json', alumnos)
         print("Registro añadido correctamente.")
     except Exception as e:
-        print(f"Error al añadir registro: {e}")
+        print(f"Error al añadir nuevo registro: {e}")
 
 def editar_registro():
     try:
@@ -361,7 +445,7 @@ def editar_registro():
         registro.fecha_registro = fecha_registro
         registro.permiso = permiso
         registro.profesor = profesor
-        guardar_datos_generico('registros.json', registros)
+        guardar_datos_generico('registros.json', alumnos)
         print("Registro actualizado correctamente.")
     except Exception as e:
         print(f"Error al editar registro: {e}")
@@ -375,12 +459,12 @@ def consultar_registro():
         print(f"No se encontró un registro para el alumno con DNI {alumno_dni}.")
 
 def listar_registros():
-    for registro in registros:
-        print(registro.to_string())
+    for alumno in alumnos:
+        print(alumno.mostrar_datos())
 
 def buscar_registro(alumno_dni):
-    for registro in registros:
-        if registro.alumno.dni == alumno_dni:
+    for registro in alumnos:
+        if registro.persona.dni == alumno_dni:
             return registro
     return None
 
@@ -491,7 +575,7 @@ def consultar_profesor():
 
 def listar_profesores():
     for profesor in profesores:
-        print(profesor.to_string())
+        print(profesor.mostrar_datos())
 
 def valida_profesor(dni):
     for profesor in profesores:
@@ -508,6 +592,20 @@ def mostrar_menu():
     print("5. Registrar Anticipo")
     print("6. Generar Factura")
     print("0. Salir")
+
+
+alumnos = cargar_datos_generico('registros.json', Alumno)
+#alumnos = cargar_datos_generico('alumnos.json', Alumno)
+permisos = cargar_datos_generico('permisos.json', Permiso)
+profesores = cargar_datos_generico('profesores.json', Profesor)
+vehiculos = cargar_datos('vehiculos.json')
+clases = cargar_datos('clases.json')
+anticipos = cargar_datos('anticipos.json')
+facturas = cargar_datos('facturas.json')
+
+
+for profesor in profesores:
+    print(profesor.mostrar_datos())
 
 def main():
     while True:

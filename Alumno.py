@@ -3,8 +3,8 @@ from feedback2.Registro import Registro
 
 class Alumno(Registro):
     def __init__(self, nombre='', primer_apellido='', segundo_apellido='', dni='', fecha_nacimiento='',
-                 fecha_registro=None, num_registro=None, permiso_opta=None, domicilio='', municipio='', provincia='',
-                 telefono1='', telefono2='', correo='', num_clases=0, profesor=None, examenes_teoricos=None, examenes_circulacion=None, total_anticipos=0.0):
+                 fecha_registro='', num_registro='', permiso_opta='', domicilio='', municipio='', provincia='',
+                 telefono1='', telefono2='', correo='', num_clases=0, profesor='', examenes_teoricos='', examenes_circulacion='', total_anticipos=0.0):
         super().__init__(nombre, primer_apellido, segundo_apellido, dni, fecha_nacimiento, fecha_registro, num_registro, permiso_opta)
         self._domicilio = domicilio
         self._municipio = municipio
@@ -20,7 +20,7 @@ class Alumno(Registro):
 
     @property
     def profesor(self):
-        return self._profesor
+        return self._profesor if self._profesor is not None else ""
 
     @profesor.setter
     def profesor(self, value):
@@ -140,7 +140,7 @@ class Alumno(Registro):
         }
 
 
-    def mostrar_datos(self):
+    def mostrar_info_profesor(self):
         return (f"----------------------------------------------\n"
                 f"| Número de Registro: {self._num_registro}\n"
                 f"|  Fecha de Registro: {self._fecha_registro}\n"
@@ -164,6 +164,7 @@ class Alumno(Registro):
                 f"|  |  Exámenes de Circulación: {self._examenes_circulacion}\n"
                 f"|  |  Total Anticipos: {self._total_anticipos}\n"
                 f"----------------------------------------------\n")
+
     def mostrar_datos_basicos(self):
         return (f"----------------------------------------------\n"
                 f"| Número de Registro: {self._num_registro}\n"
@@ -176,3 +177,37 @@ class Alumno(Registro):
                 f"|  |  DNI: {self.dni}\n"
                 f"|  |  Fecha de Nacimiento: {self.fecha_nacimiento}\n"
                 f"----------------------------------------------\n")
+
+    def mostrar_datos_editar(self):
+        return (f"\n----------------------------------------------\n"
+                f"|  Número de Registro: {self._num_registro} (no editable)\n"
+                f"|  1. Fecha de Registro: {self._fecha_registro}\n"
+                f"|  2. Permiso Opta: {self._permiso_opta}\n"
+                f"|  3.  Nombre: {self.nombre}\n"
+                f"|  4.  Primer Apellido: {self.primer_apellido}\n"
+                f"|  5.  Segundo Apellido: {self.segundo_apellido}\n"
+                f"|  6.  DNI: {self.dni}\n"
+                f"|  7.  Fecha de Nacimiento: {self.fecha_nacimiento}\n"
+                f"----------------------------------------------\n")
+    def mostrar_datos_editar_avanzado(self):
+        return (f"\n----------------------------------------------\n"
+                f"|  Número de Registro: {self._num_registro}\n"
+                f"|  Fecha de Registro: {self._fecha_registro}\n"
+                f"|  Permiso Opta: {self._permiso_opta}\n"
+                f"|  Nombre: {self.nombre}\n"
+                f"|  Primer Apellido: {self.primer_apellido}\n"
+                f"|  Segundo Apellido: {self.segundo_apellido}\n"
+                f"|  DNI: {self.dni}\n"
+                f"|  Fecha de Nacimiento: {self.fecha_nacimiento}\n"
+                f"----------------------------------------------\n"
+                f"|  1.  Domicilio: {self._domicilio}\n"
+                f"|  2.  Municipio: {self._municipio}\n"
+                f"|  3.  Provincia: {self._provincia}\n"
+                f"|  4.  Teléfono 1: {self._telefono1}\n"
+                f"|  5.  Teléfono 2: {self._telefono2}\n"
+                f"|  6.  Correo: {self._correo}\n"
+                f"|  7.  Número de Clases: {self._num_clases}\n"
+                f"|  8.  Profesor: {self.profesor}\n"
+                f"|  9.  Exámenes Teóricos: {self._examenes_teoricos}\n"
+                f"|  10.  Exámenes de Circulación: {self._examenes_circulacion}\n"
+                f"|  11.  Total Anticipos: {self._total_anticipos}")

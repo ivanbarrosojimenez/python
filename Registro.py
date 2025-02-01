@@ -44,7 +44,7 @@ class Registro(Persona):
             'permiso_opta': self._permiso_opta
         }
 
-    def mostrar_datos(self):
+    def mostrar_info_profesor(self):
         return (f"Nombre: {self.nombre}, Primer Apellido: {self.primer_apellido}, "
                 f"Segundo Apellido: {self.segundo_apellido}, DNI: {self.dni}, "
                 f"Fecha de Nacimiento: {self.fecha_nacimiento}, Número de Registro: {self._num_registro}, "

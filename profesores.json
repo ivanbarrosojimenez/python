@@ -1,60 +1,117 @@
 [
     {
-        "dni": "1",
+        "dni": "12344321D",
         "nombre": "Pepa",
-        "primer_apellido": "",
-        "segundo_apellido": "",
-        "fecha_nacimiento": "",
-        "vehiculo": null,
-        "tipo_vehiculo": null,
-        "itv": null,
-        "gastos_combustible": null,
-        "permisos": [
-            {
-                "tipo_permiso": "B",
-                "precio_matricula": 500.0,
-                "clases_incluidas": 20,
-                "precio_por_clase": 25.0,
-                "precio_examen": 50.0,
-                "precio_renovacion": 30.0
-            }
-        ]
+        "primer_apellido": "Concha",
+        "segundo_apellido": "Velazquez",
+        "vehiculo": "Audi A4",
+        "tipo_vehiculo": "Seda",
+        "itv": "01/05/2024",
+        "gastos_combustible": {
+            "02/02/2025": 14.0,
+            "01/01/2025": 23.45
+        }
     },
     {
-        "dni": "12345678F",
-        "nombre": "pepe",
-        "primer_apellido": "",
-        "segundo_apellido": "",
-        "fecha_nacimiento": "",
-        "vehiculo": null,
-        "tipo_vehiculo": null,
-        "itv": null,
-        "gastos_combustible": null,
-        "permisos": [
-            {
-                "tipo_permiso": "A",
-                "precio_matricula": 400.0,
-                "clases_incluidas": 25,
-                "precio_por_clase": 30.0,
-                "precio_examen": 60.0,
-                "precio_renovacion": 35.0
-            },
-            {
-                "tipo_permiso": "B",
-                "precio_matricula": 500.0,
-                "clases_incluidas": 20,
-                "precio_por_clase": 25.0,
-                "precio_examen": 50.0,
-                "precio_renovacion": 30.0
-            },
-            {
-                "tipo_permiso": "C",
-                "precio_matricula": 900.0,
-                "clases_incluidas": 40,
-                "precio_por_clase": 45.0,
-                "precio_examen": 90.0,
-                "precio_renovacion": 50.0
-            }
-        ]
+        "dni": "00000000A",
+        "nombre": "Juan",
+        "primer_apellido": "Perez",
+        "segundo_apellido": "Gomez",
+        "vehiculo": "Moto",
+        "tipo_vehiculo": "Scooter",
+        "itv": "2022-11-15",
+        "gastos_combustible": {
+            "02/02/2025": 125.0,
+            "15/01/2025": 41.0
+        }
+    },
+    {
+        "dni": "19191919J",
+        "nombre": "Sara",
+        "primer_apellido": "Lopez",
+        "segundo_apellido": "Martinez",
+        "vehiculo": "Bicicleta",
+        "tipo_vehiculo": "Mountain Bike",
+        "itv": "",
+        "gastos_combustible": {
+            "02/01/2025": 12.14
+        }
+    },
+    {
+        "dni": "70809090D",
+        "nombre": "Jorge",
+        "primer_apellido": "Garcia",
+        "segundo_apellido": "Fernandez",
+        "vehiculo": "Coche",
+        "tipo_vehiculo": "SUV",
+        "itv": "2024-01-20",
+        "gastos_combustible": {
+            "01/01/2025": 154.43
+        }
+    },
+    {
+        "dni": "88884444D",
+        "nombre": "Raul",
+        "primer_apellido": "Jimenez",
+        "segundo_apellido": "Ruiz",
+        "vehiculo": "Coche",
+        "tipo_vehiculo": "Hatchback",
+        "itv": "2023-07-30",
+        "gastos_combustible": {}
+    },
+    {
+        "dni": "12345678B",
+        "nombre": "Ana",
+        "primer_apellido": "Sanchez",
+        "segundo_apellido": "Diaz",
+        "vehiculo": "Coche",
+        "tipo_vehiculo": "Convertible",
+        "itv": "2023-09-12",
+        "gastos_combustible": {}
+    },
+    {
+        "dni": "87654321C",
+        "nombre": "Luis",
+        "primer_apellido": "Torres",
+        "segundo_apellido": "Hernandez",
+        "vehiculo": "Coche",
+        "tipo_vehiculo": "Coupe",
+        "itv": "2022-12-05",
+        "gastos_combustible": {}
+    },
+    {
+        "dni": "11223344E",
+        "nombre": "Maria",
+        "primer_apellido": "Ortiz",
+        "segundo_apellido": "Ramirez",
+        "vehiculo": "Coche",
+        "tipo_vehiculo": "Sedan",
+        "itv": "2023-03-18",
+        "gastos_combustible": {
+            "02/04/2024": 12.45,
+            "02/05/2025": 123.45
+        }
+    },
+    {
+        "dni": "55667788F",
+        "nombre": "Carlos",
+        "primer_apellido": "Navarro",
+        "segundo_apellido": "Vega",
+        "vehiculo": "Coche",
+        "tipo_vehiculo": "SUV",
+        "itv": "2024-06-22",
+        "gastos_combustible": {
+            "02/01/2025": 24.34
+        }
+    },
+    {
+        "dni": "99887766G",
+        "nombre": "Elena",
+        "primer_apellido": "Morales",
+        "segundo_apellido": "Castro",
+        "vehiculo": "Coche",
+        "tipo_vehiculo": "Hatchback",
+        "itv": "2023-08-14",
+        "gastos_combustible": {}
     }
 ]

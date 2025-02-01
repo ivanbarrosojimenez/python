@@ -3,18 +3,18 @@ import json
 import os
 import re
 
-from feedback2.Clase import Clase
-from feedback2.Alumno import Alumno
-from feedback2.Factura import Factura
-from feedback2.GeneradorPDF import GeneradorPDF
+from feedback_final.Clase import Clase
+from feedback_final.Alumno import Alumno
+from feedback_final.Factura import Factura
+from feedback_final.GeneradorPDF import GeneradorPDF
 
-from feedback2.Permiso import Permiso
-from feedback2.Profesor import Profesor
-from feedback2.Anticipo import Anticipo
-from feedback2.Vehiculo import Vehiculo
+from feedback_final.Permiso import Permiso
+from feedback_final.Profesor import Profesor
+from feedback_final.Anticipo import Anticipo
+from feedback_final.Vehiculo import Vehiculo
 
 
-#Gestion principal:
+'''--------------Gestion principal------------'''
 def mostrar_menu():
     print(f"Información básica: Las fechas son en formato DD/MM/AAAAA")
     print(f"")
@@ -31,7 +31,7 @@ def mostrar_menu():
 
 
 
-#Gestion de registros:
+''' ---------------Gestion de registros -------------------'''
 def mostrar_submenu_registros():
     print(f"")
     imprime_formato_menu("Gestión de Registros", 1)
@@ -67,15 +67,6 @@ def alta_registro():
         permiso = solicitar_tipo_permiso()
         permiso_opta = permiso.tipo_permiso
 
-
-        '''profesores_disponibles = buscar_profesores(permiso_opta)
-        if not profesores_disponibles:
-            print(f"No hay profesores disponibles para el permiso {permiso_opta}, da de alta primero un profesor para ese permiso")
-            return
-        imprime_disponibles(profesores_disponibles)
-        indice_profesor = obtener_indice_respuesta("Seleccione el profesor: ", profesores_disponibles)
-        profesor = profesores_disponibles[int(indice_profesor) - 1]
-        '''
         alumno_dni = solicitar_dni("Ingrese el DNI del alumno: ")
 
         alumno_existente = buscar_alumno_por_dni_y_permiso(alumno_dni, permiso_opta)
@@ -180,7 +171,7 @@ def listar_registros():
     for alumno in alumnos:
         print(alumno.mostrar_datos_basicos())
 
-#Gestion de alumnos:
+''' ----------------Gestion de alumnos--------------'''
 
 
 def imprime_formato_menu(texto, subnivel=0, ancho=50,):
@@ -257,10 +248,6 @@ def editar_alumno():
     indice_alumno = obtener_indice_respuesta("Ingrese el número de Alumno a editar: ", alumnos_disponibles)
     alumno = alumnos[int(indice_alumno) - 1]
 
-
-    #print(f"-----------------")
-    #print(f"Editando Alumno: {alumno.dni} - {alumno.nombre} {alumno.primer_apellido} {alumno.segundo_apellido}")
-
     while True:
         print(f"{alumno.mostrar_datos_editar_avanzado()}")
         print(f"|  0. Volver al menú Principal  \n")
@@ -309,8 +296,6 @@ def editar_alumno():
             print("Opción no válida, por favor intente de nuevo.")
         guardar_datos_generico('json/registros.json', alumnos)
         print("Alumno actualizado correctamente.")
-
-
 
 
 
@@ -454,7 +439,6 @@ def existe_profesor(dni):
     return False
 
 ''' ------------ Bloque para gestion de clases ---------------'''
-
 
 def mostrar_submenu_clases():
     imprime_formato_menu("Gestión de Clases", 1)
@@ -631,8 +615,6 @@ def registrar_clase():
 
 
 ''' ------------ Bloque para gestion de permisos ---------------'''
-
-
 def mostrar_submenu_permisos():
     print(f"")
     imprime_formato_menu("Gestión de Permisos", 1)
@@ -749,8 +731,6 @@ def gestionar_permisos():
 
 
 ''' ------------ Bloque para gestion de facturas ---------------'''
-
-
 def mostrar_submenu_facturas():
     imprime_formato_menu("Gestión de Facturas", 1)
     imprime_formato_menu("1. Generar Factura", 1)
@@ -854,7 +834,6 @@ def consutar_factura():
     mostrar_factura_con_indice(facturas)
     indice_factura = obtener_indice_respuesta("Seleccione la factura a consultar: ", facturas)
     factura = facturas[int(indice_factura) - 1]
-    alumno = buscar_alumno(factura.alumno)
 
     print(f"{factura.generar_factura()}")
 
@@ -1054,8 +1033,6 @@ def valida_alumno(dni):
         if alumno.dni == dni:
             return True
     return False
-
-
 
 
 

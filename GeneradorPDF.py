@@ -93,17 +93,8 @@ class GeneradorPDF:
                 pdf.cell(0, 10, f"Clase con {clase.profesor} el {clase.fecha_hora}", 0, 1)
             pdf.ln(10)
 
-        # Totales
-        total = (factura.precio_matricula +
-                 factura.num_clases_incluidas * factura.precio_clase +
-                 clases_excedentes * factura.precio_clase +
-                 factura.num_examenes * factura.precio_examen +
-                 factura.num_renovaciones * factura.precio_renovacion +
-                 factura.anticipos)
-        iva = total * 0.21
-        total_con_iva = total + iva
-        saldo_pendiente = total_con_iva - factura.anticipos
 
+        # Totales
         pdf.set_font("Arial", 'B', 12)
         pdf.cell(0, 10, "Totales (en Euros)", 0, 1)
         pdf.set_font("Arial", size=12)
@@ -111,16 +102,16 @@ class GeneradorPDF:
         pdf.cell(80, 10, "Importe", 1)
         pdf.ln(10)
         pdf.cell(80, 10, "Total", 1)
-        pdf.cell(80, 10, f"{total:.2f}", 1)
+        pdf.cell(80, 10, f"{factura.calcular_total():.2f}", 1)
         pdf.ln(10)
         pdf.cell(80, 10, "IVA (21%)", 1)
-        pdf.cell(80, 10, f"{iva:.2f}", 1)
+        pdf.cell(80, 10, f"{factura.calcular_iva():.2f}", 1)
         pdf.ln(10)
         pdf.cell(80, 10, "Total con IVA", 1)
-        pdf.cell(80, 10, f"{total_con_iva:.2f}", 1)
+        pdf.cell(80, 10, f"{factura.calcular_total_con_iva():.2f}", 1)
         pdf.ln(10)
         pdf.cell(80, 10, "Saldo Pendiente", 1)
-        pdf.cell(80, 10, f"{saldo_pendiente:.2f}", 1)
+        pdf.cell(80, 10, f"{factura.calcular_saldo_pendiente():.2f}", 1)
         pdf.ln(10)
 
         if detalles_pago:

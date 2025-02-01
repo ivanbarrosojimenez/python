@@ -1,5 +1,5 @@
 # feedback2/Registro.py
-from feedback2.Persona import Persona
+from feedback_final.Persona import Persona
 
 class Registro(Persona):
     def __init__(self, nombre='', primer_apellido='', segundo_apellido='', dni='', fecha_nacimiento='', fecha_registro=None, num_registro=None, permiso_opta=None):

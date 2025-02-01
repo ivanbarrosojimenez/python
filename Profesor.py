@@ -45,7 +45,7 @@ class Profesor(Persona):
                 f"  |----------------------------------------------\n"
                 )
 
-    def mostrar_info_profesor(self):
+    def mostrar_info(self):
         gastos_combustible_str = "".join([f"\n  |  -  {fecha}: {coste}€" for fecha, coste in self.gastos_combustible.items()])
         return (f"  ----------------------------------------------\n"
                 f"  | DNI: {self.dni}\n"

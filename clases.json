@@ -10,5 +10,11 @@
         "profesor": "12344321D",
         "matricula_vehiculo": "Audi A4",
         "fecha_hora": "02/02/2025 05:00"
+    },
+    {
+        "alumno": "70809141F",
+        "profesor": "00000000A",
+        "matricula_vehiculo": "Moto",
+        "fecha_hora": "26/02/2025 16:00"
     }
 ]

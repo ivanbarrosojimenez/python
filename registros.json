@@ -16,8 +16,8 @@
         "correo": "correo",
         "num_clases": "num_clases",
         "profesor": "77777777F",
-        "examenes_teoricos": "examenes_teoricos",
-        "examenes_circulacion": "examenes_circulacion",
+        "examenes_teoricos": [],
+        "examenes_circulacion": [],
         "total_anticipos": "total_anticipos"
     },
     {

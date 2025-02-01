@@ -57,7 +57,7 @@ class Persona:
             'fecha_nacimiento': self._fecha_nacimiento
         }
 
-    def mostrar_info_profesor(self):
+    def mostrar_info(self):
         return (f"Nombre: {self._nombre}, Primer Apellido: {self._primer_apellido}, "
                 f"Segundo Apellido: {self._segundo_apellido}, DNI: {self._dni}, "
                 f"Fecha de Nacimiento: {self._fecha_nacimiento}")

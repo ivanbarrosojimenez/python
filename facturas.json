@@ -1,0 +1,15 @@
+[
+    {
+        "alumno": "70809141F",
+        "precio_matricula": 1300.0,
+        "num_clases_incluidas": 2,
+        "num_clases_dadas": 3,
+        "precio_clase": 65.0,
+        "num_examenes": 0,
+        "precio_examen": 130.0,
+        "num_renovaciones": 0,
+        "precio_renovacion": 70.0,
+        "anticipos": 450.0,
+        "permiso": "D"
+    }
+]

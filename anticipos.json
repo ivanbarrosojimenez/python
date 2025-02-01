@@ -1,0 +1,14 @@
+[
+    {
+        "alumno": "70809141F",
+        "fecha": "20/01/2025",
+        "concepto": "primer pago",
+        "cantidad": 450.0
+    },
+    {
+        "alumno": "00000000G",
+        "fecha": "02/02/2025",
+        "concepto": "pago1",
+        "cantidad": 400.0
+    }
+]

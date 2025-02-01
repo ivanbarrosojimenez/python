@@ -3,16 +3,16 @@ import json
 import os
 import re
 
-import Anticipo
-import Factura
 import Vehiculo
 from feedback2.Clase import Clase
 from feedback2.Alumno import Alumno
-from feedback2.PDFGenerator import PDFGenerator
+from feedback2.Factura import Factura
+from feedback2.GeneradorPDF import GeneradorPDF
 from feedback2.Persona import Persona
 from feedback2.Registro import Registro
 from feedback2.Permiso import Permiso
 from feedback2.Profesor import Profesor
+from feedback2.Anticipo import Anticipo
 
 #Gestion principal:
 def mostrar_menu():
@@ -84,7 +84,7 @@ def alta_registro():
         '''
         alumno_dni = solicitar_dni("Ingrese el DNI del alumno: ")
 
-        alumno_existente = buscar_alumno(alumno_dni, permiso_opta)
+        alumno_existente = buscar_alumno_por_dni_y_permiso(alumno_dni, permiso_opta)
         if alumno_existente:
             print(f"Ese Alumno ya está dado de alta para ese dni y tipo de permiso en el registro {alumno_existente.num_registro}")
             return
@@ -490,11 +490,11 @@ def consultar_profesor():
     indice_profesor = obtener_indice_respuesta("Seleccione el profesor: ", profesores)
     profesor = profesores[int(indice_profesor) - 1]
 
-    print(f"{profesor.mostrar_info_profesor()}")
+    print(f"{profesor.mostrar_info()}")
 
 def listar_profesores():
     for profesor in profesores:
-        print(profesor.mostrar_info_profesor())
+        print(profesor.mostrar_info())
 
 def existe_profesor(dni):
     for profesor in profesores:
@@ -767,7 +767,11 @@ def editar_permiso():
 
 
 def consultar_permiso():
-    pass
+    mostrar_permiso_con_indice(permisos)
+    indice_permiso = obtener_indice_respuesta("Seleccione el permiso a consultar: ", permisos)
+    permiso = permisos[int(indice_permiso) - 1]
+
+    print(f"{permiso.mostrar_info_permiso()}")
 
 
 def listar_permisos():
@@ -793,6 +797,261 @@ def gestionar_permisos():
             print("Opción no válida, por favor intente de nuevo.")
 
 
+''' ------------ Bloque para gestion de facturas ---------------'''
+
+
+def mostrar_submenu_facturas():
+    imprime_formato_menu("Gestión de Facturas", 1)
+    imprime_formato_menu("1. Generar Factura", 1)
+    imprime_formato_menu("2. Consultar Factura", 1)
+    imprime_formato_menu("3. Listar Facturas", 1)
+    imprime_formato_menu("4. Imprimir Factura", 1)
+    imprime_formato_menu("0. Volver al Menú Principal", 1)
+
+
+def obtener_precio_matricula(permiso_opta):
+    for permiso in permisos:
+        if permiso.tipo_permiso == permiso_opta:
+            return permiso.precio_matricula
+    return 0
+
+
+def obtener_numero_clases_incluidas(permiso_opta):
+    for permiso in permisos:
+        if permiso.tipo_permiso == permiso_opta:
+            return permiso.clases_incluidas
+    return 0
+
+def obtener_permiso_por_tipo(tipo_permiso):
+    for permiso in permisos:
+        if permiso.tipo_permiso == tipo_permiso:
+            return permiso
+    return None
+
+
+def obtener_total_anticipos(dni):
+    total_anticipos = 0
+    for anticipo in anticipos:
+        if anticipo.alumno == dni:
+            total_anticipos += anticipo.cantidad
+    return total_anticipos
+
+
+def contar_clases_por_alumno(alumno_dni):
+    num_clases = 0
+    for clase in clases:
+        if clase.alumno == alumno_dni:
+            num_clases += 1
+    return num_clases
+
+def calcular_numero_renovaciones(examenes_teoricos, examenes_practicos):
+    total_examenes = examenes_teoricos + examenes_practicos
+    renovaciones = max(0, (total_examenes - 3) // 3)
+    return renovaciones
+
+
+def obtener_factura(dni, permiso_opta):
+    for factura in facturas:
+        if factura.alumno == dni and factura.permiso == permiso_opta:
+            return factura
+    return False
+
+
+def registrar_factura():
+
+    alumnos_disponibles = buscar_registros()
+    mostrar_persona_con_indice(alumnos_disponibles)
+    indice_alumno = obtener_indice_respuesta("Seleccione el alumno: ", alumnos_disponibles)
+    alumno = alumnos_disponibles[int(indice_alumno) - 1]
+
+    permiso = obtener_permiso_por_tipo(alumno.permiso_opta)
+
+    factura = obtener_factura(alumno.dni, alumno.permiso_opta)
+    if (factura):
+        print(f"\nYa existe una factura para el alumno {alumno.nombre} {alumno.primer_apellido} {alumno.segundo_apellido}"
+              f" y el permiso {alumno.permiso_opta}. Se va a actualizar la factura con los datos actuales.\n")
+        facturas.remove(factura)
+
+    alumno_dni = alumno.dni
+    precio_matricula = permiso.precio_matricula
+    num_clases_incluidas = permiso.clases_incluidas
+    num_clases_dadas = contar_clases_por_alumno(alumno_dni)
+    precio_clase = permiso.precio_por_clase
+    numero_examenes = len(alumno.examenes_teoricos) + len(alumno._examenes_circulacion)
+    precio_examen = permiso.precio_examen
+    num_renovaciones = calcular_numero_renovaciones(len(alumno.examenes_teoricos), len(alumno._examenes_circulacion))
+    precio_renovacion = permiso.precio_renovacion
+    anticipos = obtener_total_anticipos(alumno.dni)
+
+    factura = Factura(alumno_dni, precio_matricula, num_clases_incluidas, num_clases_dadas,precio_clase,numero_examenes,
+                      precio_examen, num_renovaciones, precio_renovacion, anticipos, permiso.tipo_permiso)
+    facturas.append(factura)
+    guardar_datos_generico('facturas.json', facturas)
+
+    print("\nFactura registrada correctamente.\n")
+    print(f"{factura.generar_factura()}")
+
+
+def mostrar_factura_con_indice(facturas):
+    for i, factura in enumerate(facturas, start=1):
+        print(f"{i}. {factura.alumno} { factura.permiso} {factura.calcular_total_con_iva()}€")
+    if not facturas:
+        print("No hay facturas registradas.")
+
+
+def consutar_factura():
+    mostrar_factura_con_indice(facturas)
+    indice_factura = obtener_indice_respuesta("Seleccione la factura a consultar: ", facturas)
+    factura = facturas[int(indice_factura) - 1]
+    alumno = buscar_alumno(factura.alumno)
+
+    print(f"{factura.generar_factura()}")
+
+
+def listar_facturas():
+    for factura in facturas:
+        print(f"{factura.generar_factura()}")
+    if not facturas:
+        print("No hay facturas registradas.")
+
+
+def obtener_clases_por_alumno(dni):
+    clases_alumno = [clase for clase in clases if clase.alumno == dni]
+    return clases_alumno
+
+def imprimir_factura():
+    mostrar_factura_con_indice(facturas)
+    indice_factura = obtener_indice_respuesta("Seleccione la factura a imprimir: ", facturas)
+    factura = facturas[int(indice_factura) - 1]
+    alumno = buscar_alumno(factura.alumno)
+
+    print(f"{factura.generar_factura()}")
+    clases_alumno = obtener_clases_por_alumno(alumno.dni)
+    # Ejemplo de uso:
+    filename = f"{alumno.dni}_Permiso_{alumno.permiso_opta}.pdf"
+    pdf_gen = GeneradorPDF(filename)
+    pdf_gen.generar_factura(factura, alumno, clases_alumno)
+
+
+def gestionar_facturas():
+    while True:
+        mostrar_submenu_facturas()
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            registrar_factura()
+        elif opcion == "2":
+            consutar_factura()
+        elif opcion == "3":
+            listar_facturas()
+        elif opcion == "4":
+            imprimir_factura()
+        elif opcion == "0":
+            break
+        else:
+            print("Opción no válida, por favor intente de nuevo.")
+
+
+
+''' ------------ Bloque para gestion de anticipos ---------------'''
+
+
+def mostrar_submenu_anticipos():
+    imprime_formato_menu("Gestión de Anticipos", 1)
+    imprime_formato_menu("1. Registrar Anticipo", 1)
+    imprime_formato_menu("2. Editar Anticipo", 1)
+    imprime_formato_menu("3. Consultar Anticipo", 1)
+    imprime_formato_menu("4. Listar Anticipos", 1)
+    imprime_formato_menu("0. Volver al Menú Principal", 1)
+
+
+def listar_anticipos():
+    for anticipo in anticipos:
+        print(anticipo.mostrar_info_anticipo())
+    if not anticipos:
+        print("\nNo hay anticipos registrados.\n")
+
+def registrar_anticipo():
+    try:
+        alumnos_disponibles = buscar_registros()
+        mostrar_persona_con_indice(alumnos_disponibles)
+        indice_alumno = obtener_indice_respuesta("Seleccione el alumno: ", alumnos_disponibles)
+        alumno = alumnos_disponibles[int(indice_alumno) - 1]
+        fecha = validar_fecha("Ingrese la fecha del anticipo (DD/MM/AAAA): ")
+        concepto = input("Ingrese el concepto del anticipo: ")
+        cantidad = validar_float("Ingrese la cantidad del anticipo: ")
+
+        anticipo = Anticipo(alumno.dni, fecha, concepto, cantidad)
+        anticipos.append(anticipo)
+        guardar_datos_generico('anticipos.json', anticipos)
+
+        print("Anticipo registrado correctamente.")
+    except Exception as e:
+        print(f"Error al registrar anticipo: {e}")
+
+
+def mostrar_anticipo_con_indice(anticipos):
+    for i, anticipo in enumerate(anticipos, start=1):
+        print(f"{i}. {anticipo.mostrar_info_anticipo()}")
+    if not anticipos:
+        print("No hay anticipos registrados.")
+
+
+def consultar_anticipo():
+    mostrar_anticipo_con_indice(anticipos)
+    indice_anticipo = obtener_indice_respuesta("Seleccione el anticipo a consultar: ", anticipos)
+    anticipo = anticipos[int(indice_anticipo) - 1]
+    alumno = buscar_alumno(anticipo.alumno)
+
+    print(f"{anticipo.mostrar_info_anticipo_avanzado(alumno)}")
+
+
+def editar_anticipo():
+    mostrar_anticipo_con_indice(anticipos)
+    indice_anticipo = obtener_indice_respuesta("Seleccione el anticipo a consultar: ", anticipos)
+    anticipo = anticipos[int(indice_anticipo) - 1]
+
+    while True:
+        print(f"{anticipo.mostrar_info_editar_anticipo()}")
+        print(f"  |  0. Volver al menú anterior")
+        print(f"  ----------------------------------------------\n")
+        opcion = input("Seleccione el dato a editar: ")
+        if opcion == "1":
+            alumnos_disponibles = buscar_registros()
+            mostrar_persona_con_indice(alumnos_disponibles)
+            indice_alumno = obtener_indice_respuesta("Seleccione el alumno: ", alumnos_disponibles)
+            alumno = alumnos_disponibles[int(indice_alumno) - 1]
+            anticipo.alumno = alumno.dni
+        elif opcion == "2":
+            nueva_fecha = validar_fecha("Ingrese la nueva fecha del anticipo (DD/MM/AAAA): ")
+            anticipo.fecha = nueva_fecha
+        elif opcion == "3":
+            nuevo_concepto = input("Ingrese el nuevo concepto del anticipo: ")
+            anticipo.concepto = nuevo_concepto
+        elif opcion == "4":
+            nueva_cantidad = validar_float("Ingrese la nueva cantidad del anticipo: ")
+            anticipo.cantidad = nueva_cantidad
+        elif opcion == "0":
+            break
+        else:
+            print("Opción no válida, por favor intente de nuevo.")
+        guardar_datos_generico('anticipos.json', anticipos)
+        print("Anticipo actualizado correctamente.")
+
+
+def gestionar_anticipos():
+    while True:
+        mostrar_submenu_anticipos()
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            registrar_anticipo()
+        elif opcion == "2":
+            editar_anticipo()
+        elif opcion == "3":
+            consultar_anticipo()
+        elif opcion == "4":
+            listar_anticipos()
+        elif opcion == "0":
+            break
 
 
 
@@ -820,7 +1079,7 @@ def solicitar_entero(mensaje):
         except ValueError:
             print("Entrada no válida. Por favor, ingrese un número entero.")
 
-def buscar_alumno(dni, tipo_permiso):
+def buscar_alumno_por_dni_y_permiso(dni, tipo_permiso):
     for registro in alumnos:
         if registro.dni == dni and registro.tipo_permiso == tipo_permiso:
             return registro
@@ -830,17 +1089,13 @@ def consultar_alumno():
     dni = input("Ingrese el DNI del alumno a consultar: ")
     alumno = buscar_alumno(dni)
     if alumno:
-        print(f"Alumno encontrado: {alumno.to_string()}")
-        # Ejemplo de uso:
-        filename = f"{alumno.dni}_{alumno.nombre}.pdf"
-        pdf_gen = PDFGenerator(filename)
-        pdf_gen.generate_pdf(alumno.to_string())
+        print(f"Alumno encontrado: {alumno.mostrar_info()}")
     else:
         print(f"No se encontró un alumno con DNI {dni}.")
 
 def listar_alumnos():
     for alumno in alumnos:
-        print(alumno.mostrar_info_profesor())
+        print(alumno.mostrar_info())
 
 def valida_alumno(dni):
     for alumno in alumnos:
@@ -850,25 +1105,7 @@ def valida_alumno(dni):
 
 
 
-def registrar_anticipo():
-    try:
-        alumno=""
-        existe=False
-        while not existe:
-            alumno = input("Ingrese el DNI del alumno: ")
-            if not valida_alumno(alumno):
-                print(f"El alumno con DNI {alumno} no existe.")
-            else:
-                existe=True
-        fecha = input("Ingrese la fecha del anticipo: ")
-        concepto = input("Ingrese el concepto del anticipo: ")
-        cantidad = float(input("Ingrese la cantidad del anticipo: "))
-        anticipo = Anticipo(alumno, fecha, concepto, cantidad)
-        anticipos.append({'alumno': alumno, 'fecha': fecha, 'concepto': concepto, 'cantidad': cantidad})
-        guardar_datos('anticipos.json', anticipos)
-        anticipo.mostrar_info_anticipo()
-    except Exception as e:
-        print(f"Error al registrar anticipo: {e}")
+
 
 def generar_factura():
     try:
@@ -1019,12 +1256,12 @@ permisos = cargar_datos_generico('permisos.json', Permiso)
 profesores = cargar_datos_generico('profesores.json', Profesor)
 vehiculos = cargar_datos('vehiculos.json')
 clases = cargar_datos_generico('clases.json', Clase)
-anticipos = cargar_datos('anticipos.json')
-facturas = cargar_datos('facturas.json')
+anticipos = cargar_datos_generico('anticipos.json', Anticipo)
+facturas = cargar_datos_generico('facturas.json', Factura)
 
 
 for profesor in profesores:
-    print(profesor.mostrar_info_profesor())
+    print(profesor.mostrar_info())
 
 
 
@@ -1044,9 +1281,9 @@ def main():
         elif opcion == "5":
             gestionar_permisos()
         elif opcion == "6":
-            registrar_anticipo()
+            gestionar_anticipos()
         elif opcion == "7":
-            generar_factura()
+            gestionar_facturas()
         elif opcion == "0":
             print("Saliendo del programa...")
             break

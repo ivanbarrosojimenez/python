@@ -140,7 +140,7 @@ class Alumno(Registro):
         }
 
 
-    def mostrar_info_profesor(self):
+    def mostrar_info(self):
         return (f"----------------------------------------------\n"
                 f"| Número de Registro: {self._num_registro}\n"
                 f"|  Fecha de Registro: {self._fecha_registro}\n"

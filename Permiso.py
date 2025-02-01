@@ -18,7 +18,21 @@ class Permiso:
         }
 
 
-    def mostrar_datos(self):
-        return (f"Tipo Permiso: {self.tipo_permiso}, Precio Matrícula: {self.precio_matricula}, "
-                f"Clases Incluidas: {self.clases_incluidas}, Precio por Clase: {self.precio_por_clase}, "
-                f"Precio Examen: {self.precio_examen}, Precio Renovación: {self.precio_renovacion}")
+    def mostrar_info_editar_permiso(self):
+        return (f"\n  ----------------------------------------------\n"
+                f"  |  1. Tipo Permiso: {self.tipo_permiso}\n"
+                f"  |  2. Precio Matrícula: {self.precio_matricula}\n"
+                f"  |  3. Clases Incluidas: {self.clases_incluidas}\n"
+                f"  |  4. Precio por Clase: {self.precio_por_clase}\n"
+                f"  |  5. Precio Examen: {self.precio_examen}\n"
+                f"  |  6. Precio Renovación: {self.precio_renovacion}")
+
+    def mostrar_info_permiso(self):
+        return (f"\n  ----------------------------------------------\n"
+                f"  |  Tipo Permiso: {self.tipo_permiso}\n"
+                f"  |  Precio Matrícula: {self.precio_matricula}\n"
+                f"  |  Clases Incluidas: {self.clases_incluidas}\n"
+                f"  |  Precio por Clase: {self.precio_por_clase}\n"
+                f"  |  Precio Examen: {self.precio_examen}\n"
+                f"  |  Precio Renovación: {self.precio_renovacion}\n"
+                f"  ----------------------------------------------\n")

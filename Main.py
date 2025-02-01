@@ -17,14 +17,15 @@ from feedback2.Profesor import Profesor
 #Gestion principal:
 def mostrar_menu():
     #TODO Añadir info básica
-
+    print(f"")
     imprime_formato_menu("Menú Principal" )
     imprime_formato_menu("1. Gestionar Registros")
     imprime_formato_menu("2. Gestionar Alumnos")
     imprime_formato_menu("3. Gestionar Profesores")
-    imprime_formato_menu("4. Registrar Clase")
-    imprime_formato_menu("5. Registrar Anticipo")
-    imprime_formato_menu("6. Generar Factura")
+    imprime_formato_menu("4. Gestionar Clases")
+    imprime_formato_menu("5. Gestionar Permisos")
+    imprime_formato_menu("6. Gestionar Anticipos")
+    imprime_formato_menu("7. Generar Factura")
     imprime_formato_menu("0. Salir")
     print(f"")
 
@@ -32,6 +33,7 @@ def mostrar_menu():
 
 #Gestion de registros:
 def mostrar_submenu_registros():
+    print(f"")
     imprime_formato_menu("Gestión de Registros", 1)
     imprime_formato_menu("1. Alta Registro", 1)
     imprime_formato_menu("2. Editar Registro", 1)
@@ -278,8 +280,13 @@ def registrar_alumno():
     except Exception as e:
         print(f"Error al registrar alumno: {e}")
 
+def mostrar_clase_con_indice(clases):
+    for i, clase in enumerate(clases, start=1):
+        print(f"\n  | Clase {i}.\n {clase.mostrar_info_clase()}")
+    if not clase:
+        print("No hay alumnos registrados.")
 
-def mostrar_info_personas(registros):
+def mostrar_persona_con_indice(registros):
     for i, persona in enumerate(registros, start=1):
         print(f"{i}. {persona.dni} - {persona.nombre} {persona.primer_apellido} {persona.segundo_apellido}")
     if not registros:
@@ -294,7 +301,7 @@ def mostrar_info_gastos_combustible_profesor(profesor):
 
 def editar_alumno():
     alumnos_disponibles= buscar_registros()
-    mostrar_info_personas(registro for registro in alumnos_disponibles)
+    mostrar_persona_con_indice(registro for registro in alumnos_disponibles)
     indice_alumno = obtener_indice_respuesta("Ingrese el número de Alumno a editar: ", alumnos_disponibles)
     alumno = alumnos[int(indice_alumno) - 1]
 
@@ -495,13 +502,295 @@ def existe_profesor(dni):
             return True
     return False
 
+''' ------------ Bloque para gestion de clases ---------------'''
+
+
+def mostrar_submenu_clases():
+    imprime_formato_menu("Gestión de Clases", 1)
+    imprime_formato_menu("1. Registrar Clase", 1)
+    imprime_formato_menu("2. Editar Clase", 1)
+    imprime_formato_menu("3. Consultar Clases", 1)
+    imprime_formato_menu("4. Listar Clases", 1)
+    imprime_formato_menu("0. Volver al Menú Principal", 1)
+
+
+def buscar_clases():
+    for i in range(len(clases)):
+        print(f"{i+1}. {clases[i].mostrar_info_clase()}")
+
+
+def mostrar_clases(clases_disponibles):
+    for i in range(len(clases_disponibles)):
+        print(f"{i+1}. {clases_disponibles[i].mostrar_info_clase()}")
+
+
+def editar_clase():
+    mostrar_clase_con_indice(clases)
+    indice_clase = obtener_indice_respuesta("Seleccione la clase a editar: ", clases)
+    clase = clases[int(indice_clase) - 1]
+
+    while True:
+        print(f"{clase.mostrar_info_editar_clase()}")
+        print(f"  0. Volver al menú anterior")
+        print(f"  ----------------------------------------------\n")
+        opcion = input("Seleccione el dato a editar: ")
+        if opcion == "1":
+            alumnos_disponibles = buscar_registros()
+            mostrar_persona_con_indice(alumnos_disponibles)
+            indice_alumno = obtener_indice_respuesta("Ingrese el número de Alumno para añadir a Clase: ", alumnos_disponibles)
+            alumno = alumnos[int(indice_alumno) - 1]
+            clase.alumno = alumno.dni
+        elif opcion == "2":
+            if not profesores:
+                print(f"No hay profesores disponibles, da de alta primero un profesor para ese permiso")
+                return
+            imprime_disponibles(profesores)
+            indice_profesor = obtener_indice_respuesta("Seleccione el profesor: ", profesores)
+            profesor = profesores[int(indice_profesor) - 1]
+            clase.profesor = profesor.dni
+        elif opcion == "3":
+            fecha = validar_fecha("Ingrese la fecha de la clase (DD/MM/AAAA): ")
+            hora = validar_hora("Ingrese la hora de la clase (HH:MM): ")
+            fecha_hora = f"{fecha} {hora}"
+            clase.fecha_hora = fecha_hora
+        elif opcion == "0":
+            print("Volviendo al menú anterior...")
+            break
+        else:
+            print("Opción no válida, por favor intente de nuevo.")
+        guardar_datos_generico('clases.json', clases)
+        print("Clase actualizada correctamente.")
+
+
+def consultar_clase():
+    while True:
+        print("\n----------------------------------------------")
+        print("|  Consultar Clases")
+        print("|  1. Por Profesor (DNI)")
+        print("|  2. Por Alumno (DNI)")
+        print("|  3. Por Fecha")
+        print("|  0. Volver al Menú Anterior")
+        print("----------------------------------------------\n")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            profesores_disponibles = buscar_profesores()
+            imprime_disponibles(profesores_disponibles)
+            indice_profesor = obtener_indice_respuesta("Seleccione el profesor: ", profesores_disponibles)
+            profesor = profesores_disponibles[int(indice_profesor) - 1]
+
+            dni_profesor = profesor.dni
+            clases_profesor = [clase for clase in clases if clase.profesor == dni_profesor]
+            if(not clases_profesor):
+                print(f"\nNo hay clases para ese profesor.\n")
+                return
+            print(f"\nClases del profesor {profesor.nombre} {profesor.primer_apellido} {profesor.segundo_apellido} [{profesor.dni}]:")
+            mostrar_clases(clases_profesor)
+        elif opcion == "2":
+            alumnos_disponibles = buscar_registros()
+            mostrar_persona_con_indice(alumnos_disponibles)
+            indice_alumno = obtener_indice_respuesta("Seleccione el alumno: ", alumnos_disponibles)
+            alumno = alumnos_disponibles[int(indice_alumno) - 1]
+
+            dni_alumno = alumno.dni
+            clases_alumno = [clase for clase in clases if clase.alumno == dni_alumno]
+            if(not clases_alumno):
+                print(f"\nNo hay clases para ese alumno.\n")
+                return
+            print(f"\nClases del alumno {alumno.nombre} {alumno.primer_apellido} {alumno.segundo_apellido} [{alumno.dni}]:")
+            mostrar_clases(clases_alumno)
+
+        elif opcion == "3":
+            fecha = input("Ingrese la fecha (DD/MM/AAAA): ")
+            clases_fecha = [clase for clase in clases if clase.fecha_hora.startswith(fecha)]
+            if(not clases_fecha):
+                print(f"\nNo hay clases para esa fecha.\n")
+                return
+            mostrar_clases(clases_fecha)
+        elif opcion == "0":
+            break
+        else:
+            print("Opción no válida, por favor intente de nuevo.")
+
+
+def listar_clases():
+    for clase in clases:
+        print(clase.mostrar_info_clase())
+
+
+def gestionar_clases():
+    while True:
+        mostrar_submenu_clases()
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            registrar_clase()
+        elif opcion == "2":
+            editar_clase()
+        elif opcion == "3":
+            consultar_clase()
+        elif opcion == "4":
+            listar_clases()
+        elif opcion == "0":
+            break
+        else:
+            print("Opción no válida, por favor intente de nuevo.")
+
+
+def validar_hora(param):
+    while True:
+        hora = input(param)
+        if re.match(r"([01]?[0-9]|2[0-3]):[0-5][0-9]", hora):
+            return hora
+        print("Hora no válida. Por favor, introduzca una hora en formato HH:MM.")
+
+
+def registrar_clase():
+    try:
+        alumnos_disponibles= buscar_registros()
+        mostrar_persona_con_indice(registro for registro in alumnos_disponibles)
+        indice_alumno = obtener_indice_respuesta("Ingrese el número de Alumno para añadir a Clase: ", alumnos_disponibles)
+        alumno = alumnos[int(indice_alumno) - 1]
+
+        if not profesores:
+            print(f"No hay profesores disponibles, da de alta primero un profesor para ese permiso")
+            return
+        imprime_disponibles(profesores)
+        indice_profesor = obtener_indice_respuesta("Seleccione el profesor: ", profesores)
+        profesor = profesores[int(indice_profesor) - 1]
+
+        fecha = validar_fecha("Ingrese la fecha de la clase (DD/MM/AAAA): ")
+        hora = validar_hora("Ingrese la hora de la clase (HH:MM): ")
+
+        dni_profesor = profesor.dni
+        matricula_vehiculo = profesor.vehiculo
+        fecha_hora = f"{fecha} {hora}"
+        dni_alumno = alumno.dni
+
+        clase = Clase(dni_alumno, dni_profesor, matricula_vehiculo, fecha_hora)
+
+        clases.append(clase)
+        guardar_datos_generico('clases.json', clases)
+        clase.mostrar_info_clase()
+    except Exception as e:
+        print(f"Error al registrar clase: {e}")
 
 
 
 
 
+''' ------------ Bloque para gestion de permisos ---------------'''
 
 
+def mostrar_submenu_permisos():
+    print(f"")
+    imprime_formato_menu("Gestión de Permisos", 1)
+    imprime_formato_menu("1. Registrar Permiso", 1)
+    imprime_formato_menu("2. Editar Permiso", 1)
+    imprime_formato_menu("3. Consultar Permiso", 1)
+    imprime_formato_menu("4. Listar Permisos", 1)
+    imprime_formato_menu("0. Volver al Menú Principal", 1)
+    print(f"")
+
+
+def existe_permiso(tipo_permiso):
+    for permiso in permisos:
+        if permiso.tipo_permiso == tipo_permiso:
+            return True
+    return False
+
+
+def registrar_permiso():
+    try:
+        tipo_permiso = input("Ingrese el tipo de permiso: ")
+        if existe_permiso(tipo_permiso):
+            print(f"\nEl permiso {tipo_permiso} ya está registrado.\n")
+            return
+        precio_matricula = validar_float("Ingrese el precio de la matrícula: ")
+        clases_incluidas = solicitar_entero("Ingrese el número de clases incluidas: ")
+        precio_clase = validar_float("Ingrese el precio por clase: ")
+        precio_examnen = validar_float("Ingrese el precio por examen: ")
+        precio_renovacion = validar_float("Ingrese el precio por renovación: ")
+
+        permiso = Permiso(tipo_permiso, precio_matricula, clases_incluidas, precio_clase, precio_examnen, precio_renovacion)
+
+        permisos.append(permiso)
+        guardar_datos_generico('permisos.json', permisos)
+        print(f"Permiso {tipo_permiso} registrado.")
+    except Exception as e:
+        print(f"Error al registrar permiso: {e}")
+
+
+def mostrar_permiso_con_indice(permisos):
+    for i, permiso in enumerate(permisos, start=1):
+        print(f"{i}. {permiso.tipo_permiso}")
+    if not permisos:
+        print("No hay permisos registrados.")
+
+
+def editar_permiso():
+    mostrar_permiso_con_indice(permisos)
+    indice_permiso = obtener_indice_respuesta("Seleccione el permiso a editar: ", permisos)
+    permiso = permisos[int(indice_permiso) - 1]
+
+    while True:
+        print(f"{permiso.mostrar_info_editar_permiso()}")
+        print(f"  |  0. Volver al menú anterior")
+        print(f"  ----------------------------------------------\n")
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            nuevo_tipo_permiso = input("Ingrese el nuevo tipo de permiso: ")
+            if existe_permiso(nuevo_tipo_permiso):
+                print(f"\nEl permiso {nuevo_tipo_permiso} ya está registrado.\n")
+                return
+            permiso.tipo_permiso = nuevo_tipo_permiso
+        elif opcion == "2":
+            nuevo_precio_matricula = validar_float("Ingrese el nuevo precio de la matrícula: ")
+            permiso.precio_matricula = nuevo_precio_matricula
+        elif opcion == "3":
+            nuevo_clases_incluidas = solicitar_entero("Ingrese el nuevo número de clases incluidas: ")
+            permiso.clases_incluidas = nuevo_clases_incluidas
+        elif opcion == "4":
+            nuevo_precio_clase = validar_float("Ingrese el nuevo precio por clase: ")
+            permiso.precio_por_clase = nuevo_precio_clase
+        elif opcion == "5":
+            nuevo_precio_examen = validar_float("Ingrese el nuevo precio por examen: ")
+            permiso.precio_examen = nuevo_precio_examen
+        elif opcion == "6":
+            nuevo_precio_renovacion = validar_float("Ingrese el nuevo precio por renovación: ")
+            permiso.precio_renovacion = nuevo_precio_renovacion
+        elif opcion == "0":
+            break
+        else:
+            print("Opción no válida, por favor intente de nuevo.")
+        guardar_datos_generico('permisos.json', permisos)
+
+
+def consultar_permiso():
+    pass
+
+
+def listar_permisos():
+    for permiso in permisos:
+        print(permiso.mostrar_info_permiso())
+
+
+def gestionar_permisos():
+    while True:
+        mostrar_submenu_permisos()
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            registrar_permiso()
+        elif opcion == "2":
+            editar_permiso()
+        elif opcion == "3":
+            consultar_permiso()
+        elif opcion == "4":
+            listar_permisos()
+        elif opcion == "0":
+            break
+        else:
+            print("Opción no válida, por favor intente de nuevo.")
 
 
 
@@ -559,32 +848,7 @@ def valida_alumno(dni):
             return True
     return False
 
-def registrar_clase():
-    try:
-        alumno=""
-        existe=False
-        while not existe:
-            alumno = input("Ingrese el DNI del alumno: ")
-            if not valida_alumno(alumno):
-                print(f"El alumno con DNI {alumno} no existe.")
-            else:
-                existe=True
-        profesor=""
-        existe=False
-        while not existe:
-            profesor = input("Ingrese el DNI del profesor: ")
-            if not valida_alumno(profesor):
-                print(f"El profesor con DNI {profesor} no existe.")
-            else:
-                existe=True
-        matricula_vehiculo = input("Ingrese la matrícula del vehículo: ")
-        fecha_hora = input("Ingrese la fecha y hora de la clase: ")
-        clase = Clase(alumno, profesor, matricula_vehiculo, fecha_hora)
-        clases.append({'alumno': alumno, 'profesor': profesor, 'matricula_vehiculo': matricula_vehiculo, 'fecha_hora': fecha_hora})
-        guardar_datos('clases.json', clases)
-        clase.mostrar_info_clase()
-    except Exception as e:
-        print(f"Error al registrar clase: {e}")
+
 
 def registrar_anticipo():
     try:
@@ -754,13 +1018,16 @@ alumnos = cargar_datos_generico('registros.json', Alumno)
 permisos = cargar_datos_generico('permisos.json', Permiso)
 profesores = cargar_datos_generico('profesores.json', Profesor)
 vehiculos = cargar_datos('vehiculos.json')
-clases = cargar_datos('clases.json')
+clases = cargar_datos_generico('clases.json', Clase)
 anticipos = cargar_datos('anticipos.json')
 facturas = cargar_datos('facturas.json')
 
 
 for profesor in profesores:
     print(profesor.mostrar_info_profesor())
+
+
+
 
 def main():
     while True:
@@ -773,10 +1040,12 @@ def main():
         elif opcion == "3":
             gestionar_profesores()
         elif opcion == "4":
-            registrar_clase()
+            gestionar_clases()
         elif opcion == "5":
-            registrar_anticipo()
+            gestionar_permisos()
         elif opcion == "6":
+            registrar_anticipo()
+        elif opcion == "7":
             generar_factura()
         elif opcion == "0":
             print("Saliendo del programa...")

@@ -1,8 +1,14 @@
 [
     {
-        "alumno": "1",
-        "profesor": "4",
-        "matricula_vehiculo": "1234",
-        "fecha_hora": "2024-10-10"
+        "alumno": "70809141F",
+        "profesor": "70809090D",
+        "matricula_vehiculo": "Audi A4",
+        "fecha_hora": "26/02/2025 15:30"
+    },
+    {
+        "alumno": "70809141F",
+        "profesor": "12344321D",
+        "matricula_vehiculo": "Audi A4",
+        "fecha_hora": "02/02/2025 05:00"
     }
 ]

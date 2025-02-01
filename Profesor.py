@@ -46,14 +46,14 @@ class Profesor(Persona):
                 )
 
     def mostrar_info_profesor(self):
-        gastos_combustible_str = "\n".join([f"| {fecha}: {coste}€" for fecha, coste in self.gastos_combustible.items()])
-        return (f"----------------------------------------------\n"
-                f"| DNI: {self.dni}\n"
-                f"| Nombre: {self.nombre}\n"
-                f"| Primer Apellido: {self.primer_apellido}\n"
-                f"| Segundo Apellido: {self.segundo_apellido}\n"
-                f"| Vehículo: {self.vehiculo}\n"
-                f"| Tipo de vehículo: {self.tipo_vehiculo}\n"
-                f"| ITV: {self.itv}\n"
-                f"| Gastos de combustible:\n{gastos_combustible_str}\n"
-                f"----------------------------------------------\n")
+        gastos_combustible_str = "".join([f"\n  |  -  {fecha}: {coste}€" for fecha, coste in self.gastos_combustible.items()])
+        return (f"  ----------------------------------------------\n"
+                f"  | DNI: {self.dni}\n"
+                f"  | Nombre: {self.nombre}\n"
+                f"  | Primer Apellido: {self.primer_apellido}\n"
+                f"  | Segundo Apellido: {self.segundo_apellido}\n"
+                f"  | Vehículo: {self.vehiculo}\n"
+                f"  | Tipo de vehículo: {self.tipo_vehiculo}\n"
+                f"  | ITV: {self.itv}\n"
+                f"  | Gastos de combustible:{gastos_combustible_str}\n"
+                f"  ----------------------------------------------\n")

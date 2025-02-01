@@ -1,114 +1,122 @@
 [
-  {
-    "tipo_permiso": "AM",
-    "precio_matricula": 100.0,
-    "clases_incluidas": 10,
-    "precio_por_clase": 15.0,
-    "precio_examen": 30.0,
-    "precio_renovacion": 20.0
-  },
-  {
-    "tipo_permiso": "A1",
-    "precio_matricula": 200.0,
-    "clases_incluidas": 15,
-    "precio_por_clase": 20.0,
-    "precio_examen": 40.0,
-    "precio_renovacion": 25.0
-  },
-  {
-    "tipo_permiso": "A2",
-    "precio_matricula": 300.0,
-    "clases_incluidas": 20,
-    "precio_por_clase": 25.0,
-    "precio_examen": 50.0,
-    "precio_renovacion": 30.0
-  },
-  {
-    "tipo_permiso": "A",
-    "precio_matricula": 400.0,
-    "clases_incluidas": 25,
-    "precio_por_clase": 30.0,
-    "precio_examen": 60.0,
-    "precio_renovacion": 35.0
-  },
-  {
-    "tipo_permiso": "B",
-    "precio_matricula": 500.0,
-    "clases_incluidas": 20,
-    "precio_por_clase": 25.0,
-    "precio_examen": 50.0,
-    "precio_renovacion": 30.0
-  },
-  {
-    "tipo_permiso": "B+E",
-    "precio_matricula": 600.0,
-    "clases_incluidas": 25,
-    "precio_por_clase": 30.0,
-    "precio_examen": 60.0,
-    "precio_renovacion": 35.0
-  },
-  {
-    "tipo_permiso": "C1",
-    "precio_matricula": 700.0,
-    "clases_incluidas": 30,
-    "precio_por_clase": 35.0,
-    "precio_examen": 70.0,
-    "precio_renovacion": 40.0
-  },
-  {
-    "tipo_permiso": "C1+E",
-    "precio_matricula": 800.0,
-    "clases_incluidas": 35,
-    "precio_por_clase": 40.0,
-    "precio_examen": 80.0,
-    "precio_renovacion": 45.0
-  },
-  {
-    "tipo_permiso": "C",
-    "precio_matricula": 900.0,
-    "clases_incluidas": 40,
-    "precio_por_clase": 45.0,
-    "precio_examen": 90.0,
-    "precio_renovacion": 50.0
-  },
-  {
-    "tipo_permiso": "C+E",
-    "precio_matricula": 1000.0,
-    "clases_incluidas": 45,
-    "precio_por_clase": 50.0,
-    "precio_examen": 100.0,
-    "precio_renovacion": 55.0
-  },
-  {
-    "tipo_permiso": "D1",
-    "precio_matricula": 1100.0,
-    "clases_incluidas": 50,
-    "precio_por_clase": 55.0,
-    "precio_examen": 110.0,
-    "precio_renovacion": 60.0
-  },
-  {
-    "tipo_permiso": "D1+E",
-    "precio_matricula": 1200.0,
-    "clases_incluidas": 55,
-    "precio_por_clase": 60.0,
-    "precio_examen": 120.0,
-    "precio_renovacion": 65.0
-  },
-  {
-    "tipo_permiso": "D",
-    "precio_matricula": 1300.0,
-    "clases_incluidas": 60,
-    "precio_por_clase": 65.0,
-    "precio_examen": 130.0,
-    "precio_renovacion": 70.0
-  },
-  {
-    "tipo_permiso": "D+E",
-    "precio_matricula": 1400.0,
-    "clases_incluidas": 65,
-    "precio_por_clase": 70.0,
-    "precio_examen": 140.0,
-    "precio_renovacion": 75.0
-  }
+    {
+        "tipo_permiso": "AM",
+        "precio_matricula": 100.0,
+        "clases_incluidas": 10,
+        "precio_por_clase": 15.0,
+        "precio_examen": 30.0,
+        "precio_renovacion": 20.0
+    },
+    {
+        "tipo_permiso": "A1",
+        "precio_matricula": 200.0,
+        "clases_incluidas": 15,
+        "precio_por_clase": 20.0,
+        "precio_examen": 40.0,
+        "precio_renovacion": 25.0
+    },
+    {
+        "tipo_permiso": "A2",
+        "precio_matricula": 300.0,
+        "clases_incluidas": 20,
+        "precio_por_clase": 25.0,
+        "precio_examen": 50.0,
+        "precio_renovacion": 30.0
+    },
+    {
+        "tipo_permiso": "A",
+        "precio_matricula": 400.0,
+        "clases_incluidas": 25,
+        "precio_por_clase": 30.0,
+        "precio_examen": 60.0,
+        "precio_renovacion": 35.0
+    },
+    {
+        "tipo_permiso": "B",
+        "precio_matricula": 500.0,
+        "clases_incluidas": 20,
+        "precio_por_clase": 25.0,
+        "precio_examen": 50.0,
+        "precio_renovacion": 30.0
+    },
+    {
+        "tipo_permiso": "B+E",
+        "precio_matricula": 600.0,
+        "clases_incluidas": 25,
+        "precio_por_clase": 30.0,
+        "precio_examen": 60.0,
+        "precio_renovacion": 35.0
+    },
+    {
+        "tipo_permiso": "C1",
+        "precio_matricula": 700.0,
+        "clases_incluidas": 30,
+        "precio_por_clase": 35.0,
+        "precio_examen": 70.0,
+        "precio_renovacion": 40.0
+    },
+    {
+        "tipo_permiso": "C1+E",
+        "precio_matricula": 800.0,
+        "clases_incluidas": 35,
+        "precio_por_clase": 40.0,
+        "precio_examen": 80.0,
+        "precio_renovacion": 45.0
+    },
+    {
+        "tipo_permiso": "C",
+        "precio_matricula": 900.0,
+        "clases_incluidas": 40,
+        "precio_por_clase": 45.0,
+        "precio_examen": 90.0,
+        "precio_renovacion": 50.0
+    },
+    {
+        "tipo_permiso": "C+E",
+        "precio_matricula": 1000.0,
+        "clases_incluidas": 45,
+        "precio_por_clase": 50.0,
+        "precio_examen": 100.0,
+        "precio_renovacion": 55.0
+    },
+    {
+        "tipo_permiso": "D1",
+        "precio_matricula": 1100.0,
+        "clases_incluidas": 50,
+        "precio_por_clase": 55.0,
+        "precio_examen": 110.0,
+        "precio_renovacion": 60.0
+    },
+    {
+        "tipo_permiso": "D1+E",
+        "precio_matricula": 1200.0,
+        "clases_incluidas": 55,
+        "precio_por_clase": 60.0,
+        "precio_examen": 120.0,
+        "precio_renovacion": 65.0
+    },
+    {
+        "tipo_permiso": "D",
+        "precio_matricula": 1300.0,
+        "clases_incluidas": 60,
+        "precio_por_clase": 65.0,
+        "precio_examen": 130.0,
+        "precio_renovacion": 70.0
+    },
+    {
+        "tipo_permiso": "D+E",
+        "precio_matricula": 1400.0,
+        "clases_incluidas": 65,
+        "precio_por_clase": 70.0,
+        "precio_examen": 140.0,
+        "precio_renovacion": 75.0
+    },
+    {
+        "tipo_permiso": "A10",
+        "precio_matricula": 250.0,
+        "clases_incluidas": 1,
+        "precio_por_clase": 90.0,
+        "precio_examen": 100.0,
+        "precio_renovacion": 900.0
+    }
 ]

@@ -6,7 +6,23 @@ class Clase:
         self.fecha_hora = fecha_hora
 
     def mostrar_info_clase(self):
-        print(f'Alumno (DNI): {self.alumno}')
-        print(f'Profesor (DNI): {self.profesor}')
-        print(f'Matrícula del Vehículo: {self.matricula_vehiculo}')
-        print(f'Fecha y Hora: {self.fecha_hora}')
+        return (f"  ----------------------------------------------\n"
+                f"  | Alumno (DNI): {self.alumno}\n"
+                f"  | Profesor (DNI): {self.profesor}\n"
+                f"  | Matrícula del vehículo: {self.matricula_vehiculo}\n"
+                f"  | Fecha y hora: {self.fecha_hora}\n"
+                f"  ----------------------------------------------\n")
+
+    def to_json(self):
+        return {
+            'alumno': self.alumno,
+            'profesor': self.profesor,
+            'matricula_vehiculo': self.matricula_vehiculo,
+            'fecha_hora': self.fecha_hora
+        }
+    def mostrar_info_editar_clase(self):
+        return (f"  ----------------------------------------------\n"
+                f"  1. Alumno (DNI): {self.alumno}\n"
+                f"  2. Profesor (DNI): {self.profesor}\n"
+                f"  3. Fecha y hora: {self.fecha_hora}\n"
+                f"     Matrícula del vehículo (de Profesor): {self.matricula_vehiculo}")

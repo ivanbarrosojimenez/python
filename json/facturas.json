@@ -5,7 +5,7 @@
         "num_clases_incluidas": 2,
         "num_clases_dadas": 3,
         "precio_clase": 65.0,
-        "num_examenes": 0,
+        "num_examenes": 2,
         "precio_examen": 130.0,
         "num_renovaciones": 0,
         "precio_renovacion": 70.0,

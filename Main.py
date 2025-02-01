@@ -3,20 +3,20 @@ import json
 import os
 import re
 
-import Vehiculo
 from feedback2.Clase import Clase
 from feedback2.Alumno import Alumno
 from feedback2.Factura import Factura
 from feedback2.GeneradorPDF import GeneradorPDF
-from feedback2.Persona import Persona
-from feedback2.Registro import Registro
+
 from feedback2.Permiso import Permiso
 from feedback2.Profesor import Profesor
 from feedback2.Anticipo import Anticipo
+from feedback2.Vehiculo import Vehiculo
+
 
 #Gestion principal:
 def mostrar_menu():
-    #TODO Añadir info básica
+    print(f"Información básica: Las fechas son en formato DD/MM/AAAAA")
     print(f"")
     imprime_formato_menu("Menú Principal" )
     imprime_formato_menu("1. Gestionar Registros")
@@ -61,12 +61,6 @@ def gestionar_registros():
 
 def alta_registro():
     try:
-        #persona = Persona("nombre", "primer_apellido", "segundo_apellido", "dni", "fecha_nacimiento")
-        #registro = Registro("nombre", "primer_apellido", "segundo_apellido", "dni", "fecha_nacimiento", "fecha_registro", "num_registro", "permiso_opta")
-        #alumno = Alumno("nombre", "primer_apellido", "segundo_apellido", "dni", "fecha_nacimiento", "fecha_registro", "num_registro", "permiso_opta", "domicilio", "municipio", "provincia", "telefono1", "telefono2", "correo", "num_clases", "examenes_teoricos", "examenes_circulacion", "total_anticipos")
-        #registros.append(alumno)
-
-        #guardar_datos_generico('registros.json', registros)
 
         permisos_disponibles = [permiso.tipo_permiso for permiso in permisos]
         print(f"Tipos de permiso disponibles:{permisos_disponibles}")
@@ -97,16 +91,12 @@ def alta_registro():
 
         fecha_registro = validar_fecha("Ingrese la fecha de registro (DD/MM/AAAA): ")
 
-
-
-        #persona = Persona(alumno_dni, nombre, primer_apellido, segundo_apellido,fecha_nacimiento)
-
         year = fecha_registro.split('/')[2]
         num_registro = f"{year}/{len(alumnos) + 1:04d}"
 
         nuevo_registro = Alumno(nombre, primer_apellido, segundo_apellido, alumno_dni, fecha_nacimiento, fecha_registro, num_registro, permiso_opta)
         alumnos.append(nuevo_registro)
-        guardar_datos_generico('registros.json', alumnos)
+        guardar_datos_generico('json/registros.json', alumnos)
         print("Registro añadido correctamente.")
     except Exception as e:
         print(f"Error al añadir nuevo registro: {e}")
@@ -167,50 +157,12 @@ def editar_registro():
             else:
                 print("Opción no válida, por favor intente de nuevo.")
 
-            guardar_datos_generico('registros.json', alumnos)
+            guardar_datos_generico('json/registros.json', alumnos)
             print("Registro actualizado correctamente.")
     except Exception as e:
         print(f"Error al editar registro: {e}")
 
 
-
-
-
-
-
-
-
-
-
-
-    '''    fecha_registro = input("Número de dato a editar: ")
-
-
-        year = fecha_registro.split('/')[2]
-        num_registro = f"{year}/{int(indice_registro):04d}"
-
-        permisos_disponibles = [permiso.tipo_permiso for permiso in permisos]
-        print(f"Tipos de permiso disponibles:{permisos_disponibles}")
-        permiso = solicitar_tipo_permiso()
-        permiso_opta = permiso.tipo_permiso
-
-        ''' '''
-        profesor_dni = input("Ingrese el nuevo DNI del profesor (vacío para no modificar): ")
-        profesor = buscar_profesor(profesor_dni)
-        if not profesor:
-            print(f"No se encontró un profesor con DNI {profesor_dni}.")
-            return
-        registro.profesor = profesor
-
-        ''' '''
-        registro.fecha_registro = fecha_registro
-        registro.permiso_opta = permiso_opta
-        registro.num_registro = num_registro
-        guardar_datos_generico('registros.json', alumnos)
-        print("Registro actualizado correctamente.")
-    except Exception as e:
-        print(f"Error al editar registro: {e}")
-    '''
 def consultar_registro():
     ids_registros = buscar_id_registros()
     if not ids_registros:
@@ -343,20 +295,19 @@ def editar_alumno():
             profesor = profesores[int(indice_profesor) - 1]
             alumno.profesor = profesor.dni
         elif opcion == "9":
-            #TODO IMPLEMENTAR
-            break
+            nuevo_examen = validar_fecha("Introduce fecha:")
+            alumno.examenes_teoricos.append(nuevo_examen);
+            print(f"Añadido correctamente.")
         elif opcion == "10":
-            #TODO IMPLEMENTAR
-            break
-        elif opcion == "11":
-            #TODO IMPLEMENTAR
-            break
+            nuevo_examen = validar_fecha("Introduce fecha:")
+            alumno.examenes_circulacion.append(nuevo_examen)
+            print(f"Añadido correctamente.")
         elif opcion == "0":
             print("Volviendo al menú anterior...")
             break
         else:
             print("Opción no válida, por favor intente de nuevo.")
-        guardar_datos_generico('registros.json', alumnos)
+        guardar_datos_generico('json/registros.json', alumnos)
         print("Alumno actualizado correctamente.")
 
 
@@ -407,7 +358,7 @@ def registrar_profesor():
         apellido_2 = input("Ingrese el segundo apellido del profesor: ")
         nuevo_profesor = Profesor(nombre, apellido_1, apellido_2, profesor_dni)
         profesores.append(nuevo_profesor)
-        guardar_datos_generico('profesores.json', profesores)
+        guardar_datos_generico('json/profesores.json', profesores)
         print(f"Profesor {nombre} con DNI {profesor_dni} registrado.")
     except Exception as e:
         print(f"Error al registrar profesor: {e}")
@@ -479,7 +430,7 @@ def editar_profesor():
             break
         else:
             print("Opción no válida, por favor intente de nuevo.")
-        guardar_datos_generico('profesores.json', profesores)
+        guardar_datos_generico('json/profesores.json', profesores)
         print("Profesor actualizado correctamente.")
 
 def consultar_profesor():
@@ -558,7 +509,7 @@ def editar_clase():
             break
         else:
             print("Opción no válida, por favor intente de nuevo.")
-        guardar_datos_generico('clases.json', clases)
+        guardar_datos_generico('json/clases.json', clases)
         print("Clase actualizada correctamente.")
 
 
@@ -670,7 +621,7 @@ def registrar_clase():
         clase = Clase(dni_alumno, dni_profesor, matricula_vehiculo, fecha_hora)
 
         clases.append(clase)
-        guardar_datos_generico('clases.json', clases)
+        guardar_datos_generico('json/clases.json', clases)
         clase.mostrar_info_clase()
     except Exception as e:
         print(f"Error al registrar clase: {e}")
@@ -715,7 +666,7 @@ def registrar_permiso():
         permiso = Permiso(tipo_permiso, precio_matricula, clases_incluidas, precio_clase, precio_examnen, precio_renovacion)
 
         permisos.append(permiso)
-        guardar_datos_generico('permisos.json', permisos)
+        guardar_datos_generico('json/permisos.json', permisos)
         print(f"Permiso {tipo_permiso} registrado.")
     except Exception as e:
         print(f"Error al registrar permiso: {e}")
@@ -763,7 +714,7 @@ def editar_permiso():
             break
         else:
             print("Opción no válida, por favor intente de nuevo.")
-        guardar_datos_generico('permisos.json', permisos)
+        guardar_datos_generico('json/permisos.json', permisos)
 
 
 def consultar_permiso():
@@ -886,7 +837,7 @@ def registrar_factura():
     factura = Factura(alumno_dni, precio_matricula, num_clases_incluidas, num_clases_dadas,precio_clase,numero_examenes,
                       precio_examen, num_renovaciones, precio_renovacion, anticipos, permiso.tipo_permiso)
     facturas.append(factura)
-    guardar_datos_generico('facturas.json', facturas)
+    guardar_datos_generico('json/facturas.json', facturas)
 
     print("\nFactura registrada correctamente.\n")
     print(f"{factura.generar_factura()}")
@@ -931,7 +882,7 @@ def imprimir_factura():
     filename = f"{alumno.dni}_Permiso_{alumno.permiso_opta}.pdf"
     pdf_gen = GeneradorPDF(filename)
     pdf_gen.generar_factura(factura, alumno, clases_alumno)
-
+1
 
 def gestionar_facturas():
     while True:
@@ -982,7 +933,7 @@ def registrar_anticipo():
 
         anticipo = Anticipo(alumno.dni, fecha, concepto, cantidad)
         anticipos.append(anticipo)
-        guardar_datos_generico('anticipos.json', anticipos)
+        guardar_datos_generico('json/anticipos.json', anticipos)
 
         print("Anticipo registrado correctamente.")
     except Exception as e:
@@ -1034,7 +985,7 @@ def editar_anticipo():
             break
         else:
             print("Opción no válida, por favor intente de nuevo.")
-        guardar_datos_generico('anticipos.json', anticipos)
+        guardar_datos_generico('json/anticipos.json', anticipos)
         print("Anticipo actualizado correctamente.")
 
 
@@ -1086,12 +1037,13 @@ def buscar_alumno_por_dni_y_permiso(dni, tipo_permiso):
     return None
 
 def consultar_alumno():
-    dni = input("Ingrese el DNI del alumno a consultar: ")
-    alumno = buscar_alumno(dni)
-    if alumno:
-        print(f"Alumno encontrado: {alumno.mostrar_info()}")
-    else:
-        print(f"No se encontró un alumno con DNI {dni}.")
+    alumnos_disponibles= buscar_registros()
+    mostrar_persona_con_indice(registro for registro in alumnos_disponibles)
+    indice_alumno = obtener_indice_respuesta("Ingrese el número de Alumno a editar: ", alumnos_disponibles)
+    alumno = alumnos[int(indice_alumno) - 1]
+
+    print(f"{alumno.mostrar_datos_editar_avanzado()}")
+
 
 def listar_alumnos():
     for alumno in alumnos:
@@ -1128,7 +1080,7 @@ def generar_factura():
         anticipos = float(input("Ingrese el total de anticipos: "))
         factura = Factura(alumno, precio_matricula, num_clases_incluidas, num_clases_dadas, precio_clase, num_examenes, precio_examen, num_renovaciones, precio_renovacion, anticipos)
         facturas.append({'alumno': alumno, 'precio_matricula': precio_matricula, 'num_clases_incluidas': num_clases_incluidas, 'num_clases_dadas': num_clases_dadas, 'precio_clase': precio_clase, 'num_examenes': num_examenes, 'precio_examen': precio_examen, 'num_renovaciones': num_renovaciones, 'precio_renovacion': precio_renovacion, 'anticipos': anticipos})
-        guardar_datos('facturas.json', facturas)
+        guardar_datos('json/facturas.json', facturas)
         factura.generar_factura()
     except Exception as e:
         print(f"Error al generar factura: {e}")
@@ -1138,6 +1090,9 @@ def guardar_datos(filename, data):
         json.dump(data, file, indent=4)
 
 def guardar_datos_generico(filename, datos):
+    if not os.path.exists('json'):
+        os.makedirs('json')
+
     with open(filename, 'w') as file:
         json.dump([dato.to_json() for dato in datos], file, indent=4)
 
@@ -1150,6 +1105,8 @@ def cargar_datos(filename):
         return []
 
 def cargar_datos_generico(filename, cls):
+    if not os.path.exists('json'):
+        os.makedirs('json')
     try:
         if os.path.getsize(filename) == 0:
             print(f"El archivo {filename} está vacío.")
@@ -1160,8 +1117,6 @@ def cargar_datos_generico(filename, cls):
     except FileNotFoundError:
         print(f"El archivo {filename} no existe.")
         return []
-
-
 
 
 def buscar_permiso(tipo_permiso):
@@ -1249,21 +1204,14 @@ def buscar_profesor(dni):
             return profesor
     return None
 
-
-alumnos = cargar_datos_generico('registros.json', Alumno)
-#alumnos = cargar_datos_generico('alumnos.json', Alumno)
-permisos = cargar_datos_generico('permisos.json', Permiso)
-profesores = cargar_datos_generico('profesores.json', Profesor)
-vehiculos = cargar_datos('vehiculos.json')
-clases = cargar_datos_generico('clases.json', Clase)
-anticipos = cargar_datos_generico('anticipos.json', Anticipo)
-facturas = cargar_datos_generico('facturas.json', Factura)
-
-
-for profesor in profesores:
-    print(profesor.mostrar_info())
-
-
+'''Carga inicial de datos, si no existe nada no da error'''
+alumnos = cargar_datos_generico('json/registros.json', Alumno)
+permisos = cargar_datos_generico('json/permisos.json', Permiso)
+profesores = cargar_datos_generico('json/profesores.json', Profesor)
+vehiculos = cargar_datos_generico('json/vehiculos.json', Vehiculo)
+clases = cargar_datos_generico('json/clases.json', Clase)
+anticipos = cargar_datos_generico('json/anticipos.json', Anticipo)
+facturas = cargar_datos_generico('json/facturas.json', Factura)
 
 
 def main():

@@ -1,0 +1,62 @@
+[
+  {
+    "matricula_vehiculo": "2345EFG",
+    "vehiculo": "Mazda 3",
+    "tipo_vehiculo": "Sedan",
+    "itv": "2023-09-12"
+  },
+  {
+    "matricula_vehiculo": "6789HIJ",
+    "vehiculo": "Hyundai Elantra",
+    "tipo_vehiculo": "Sedan",
+    "itv": "2024-10-20"
+  },
+  {
+    "matricula_vehiculo": "1011KLM",
+    "vehiculo": "Kia Soul",
+    "tipo_vehiculo": "Hatchback",
+    "itv": "2022-12-15"
+  },
+  {
+    "matricula_vehiculo": "1213NOP",
+    "vehiculo": "Jeep Wrangler",
+    "tipo_vehiculo": "SUV",
+    "itv": "2023-11-05"
+  },
+  {
+    "matricula_vehiculo": "1415QRS",
+    "vehiculo": "Subaru Impreza",
+    "tipo_vehiculo": "Sedan",
+    "itv": "2024-02-28"
+  },
+  {
+    "matricula_vehiculo": "1617TUV",
+    "vehiculo": "Volvo XC90",
+    "tipo_vehiculo": "SUV",
+    "itv": "2023-06-18"
+  },
+  {
+    "matricula_vehiculo": "1819WXY",
+    "vehiculo": "Mini Cooper",
+    "tipo_vehiculo": "Hatchback",
+    "itv": "2024-05-25"
+  },
+  {
+    "matricula_vehiculo": "2021ZAB",
+    "vehiculo": "Lexus RX",
+    "tipo_vehiculo": "SUV",
+    "itv": "2025-08-30"
+  },
+  {
+    "matricula_vehiculo": "2223CDE",
+    "vehiculo": "Porsche Cayenne",
+    "tipo_vehiculo": "SUV",
+    "itv": "2023-07-10"
+  },
+  {
+    "matricula_vehiculo": "2425FGH",
+    "vehiculo": "Jaguar XF",
+    "tipo_vehiculo": "Sedan",
+    "itv": "2024-03-12"
+  }
+]

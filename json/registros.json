@@ -16,8 +16,12 @@
         "correo": "correo",
         "num_clases": "num_clases",
         "profesor": "77777777F",
-        "examenes_teoricos": [],
-        "examenes_circulacion": [],
+        "examenes_teoricos": [
+            "02/02/2025"
+        ],
+        "examenes_circulacion": [
+            "25/01/2025"
+        ],
         "total_anticipos": "total_anticipos"
     },
     {

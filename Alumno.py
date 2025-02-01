@@ -209,5 +209,5 @@ class Alumno(Registro):
                 f"|  7.  Número de Clases: {self._num_clases}\n"
                 f"|  8.  Profesor: {self.profesor}\n"
                 f"|  9.  Exámenes Teóricos: {self._examenes_teoricos}\n"
-                f"|  10.  Exámenes de Circulación: {self._examenes_circulacion}\n"
-                f"|  11.  Total Anticipos: {self._total_anticipos}")
+                f"|  10. Exámenes de Circulación: {self._examenes_circulacion}\n"
+                f"----------------------------------------------\n")
